@@ -39,6 +39,20 @@
       padding: 20px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.3);
       margin-bottom: 20px;
+      transition: all 0.4s ease;
+      max-height: 600px;
+      overflow: hidden;
+    }
+
+    .scanner-box.compressed {
+      max-height: 100px;
+      padding: 10px 20px;
+      margin-bottom: 15px;
+    }
+
+    .scanner-box.compressed #reader {
+      height: 80px;
+      pointer-events: none;
     }
 
     #reader {
@@ -152,6 +166,21 @@
       padding: 25px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.3);
       margin-top: 20px;
+      transition: all 0.4s ease;
+    }
+
+    .manual-entry.compressed {
+      padding: 15px;
+      margin-top: 10px;
+    }
+
+    .manual-entry.compressed h3 {
+      font-size: 1em;
+      margin-bottom: 10px;
+    }
+
+    .manual-entry.compressed .input-group {
+      flex-wrap: wrap;
     }
 
     .manual-entry h3 {
@@ -246,7 +275,12 @@
       const resultBox = document.getElementById("resultBox");
       const statusHeader = document.getElementById("statusHeader");
       const details = document.getElementById("details");
+      const scannerBox = document.querySelector(".scanner-box");
+      const manualEntry = document.querySelector(".manual-entry");
 
+      // Compress the scanner box and manual entry to show more details
+      scannerBox.classList.add("compressed");
+      manualEntry.classList.add("compressed");
       resultBox.style.display = "block";
 
       if (resp.result === "VALID") {
@@ -343,8 +377,16 @@
     }
 
     function resetScanner() {
+      const scannerBox = document.querySelector(".scanner-box");
+      const manualEntry = document.querySelector(".manual-entry");
+      
       document.getElementById("resultBox").style.display = "none";
       document.getElementById("manualInput").value = "";
+      
+      // Expand the scanner box and manual entry back to normal
+      scannerBox.classList.remove("compressed");
+      manualEntry.classList.remove("compressed");
+      
       if (html5QrCode) {
         html5QrCode.resume();
       }
