@@ -24,21 +24,17 @@ The server starts on port 3000 by default. For a different port:
 node mock-server.js 8080
 ```
 
-### 2. Create config.js
+### 2. Open the Frontend
 
-Create `config.js` in the project root with:
+Open `index.html` in your browser. The default `config.js` already points to `http://localhost:3000`.
 
-```javascript
-const API_URL = "http://localhost:3000";
-```
-
-### 3. Open the Frontend
-
-Open `index.html` in your browser. You can:
+You can:
 - Use a simple HTTP server: `python -m http.server 8000`
 - Or open the file directly in your browser
 
-### 4. Test with Sample Tickets
+**For production:** Update `config.js` with your Google Apps Script URL, or use the build script which generates it from `.env`.
+
+### 3. Test with Sample Tickets
 
 In the frontend manual entry, type just the code part (without `MELA25-` prefix):
 - `VALID1` → Full ticket details
