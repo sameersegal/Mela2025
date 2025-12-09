@@ -149,50 +149,71 @@ This step is required for deploying the Apps Script as a web app that can be acc
 
 ### Part 3: Frontend Deployment to Netlify
 
-1. **Configure the Frontend**
-   - Create a `.env` file in the project root (or update existing one):
-     ```env
-     API_URL=https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec
-     ```
-     Replace `YOUR_DEPLOYMENT_ID` with the ID from your Apps Script Web App URL
+#### Recommended: Automatic GitHub + Netlify Integration
 
-2. **Build the Deployment Package**
+This method provides continuous deployment - any push to your main branch automatically deploys to Netlify.
+
+1. **Connect GitHub Repository to Netlify**
+   - Go to [Netlify](https://app.netlify.com/) and sign in
+   - Click "Add new site" > "Import an existing project"
+   - Choose "GitHub" and authorize Netlify to access your repositories
+   - Select the `Mela2025` repository
    
-   **Option A: Using PowerShell (Windows)**
-   ```powershell
-   .\build.ps1
-   ```
-   This will:
-   - Read the `.env` file
-   - Generate `config.js` with your API URL
-   - Create `mela2025-netlify.zip` with `index.html` and `config.js`
-
-   **Option B: Manual Build**
-   - Create `config.js`:
-     ```javascript
-     const API_URL = "https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec";
-     ```
-   - Create a zip file containing:
-     - `index.html`
-     - `config.js`
-
-3. **Deploy to Netlify**
+2. **Configure Build Settings**
+   - Build command: `npm run build`
+   - Publish directory: `.` (root directory)
+   - Click "Show advanced" and add environment variable:
+     - **Key**: `API_URL`
+     - **Value**: `https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec`
+       (Replace `YOUR_DEPLOYMENT_ID` with the ID from your Apps Script Web App URL from Part 2, Step 6)
    
-   **Option A: Drag & Drop (Easiest)**
-   - Go to [https://app.netlify.com/drop](https://app.netlify.com/drop)
-   - Drag and drop `mela2025-netlify.zip` or the folder containing both files
-   - Your site will be deployed instantly!
-   - Netlify will provide a URL like: `https://random-name.netlify.app`
+3. **Deploy**
+   - Click "Deploy site"
+   - Netlify will automatically:
+     - Install dependencies
+     - Run the build script to generate `config.js`
+     - Deploy your site
+   - Your site will be live at a URL like: `https://random-name.netlify.app`
+   - You can customize the site name in Netlify settings
 
-   **Option B: Git-Based Deployment**
-   - Connect your GitHub repository to Netlify
-   - Configure build settings:
-     - Build command: (leave empty or use your build script)
-     - Publish directory: `/` (root)
-   - Add environment variable in Netlify:
-     - Key: `API_URL`
-     - Value: Your Apps Script Web App URL
-   - Deploy
+4. **Automatic Updates**
+   - Any future commits to your main branch will automatically trigger a new deployment
+   - You can view deployment status and logs in the Netlify dashboard
+
+#### Alternative: Manual Deployment Options
+
+**Option A: Using PowerShell (Windows) - Legacy Method**
+```powershell
+.\build.ps1
+```
+This will create `mela2025-netlify.zip` that you can drag and drop to [Netlify Drop](https://app.netlify.com/drop).
+
+Note: This requires a `.env` file with `API_URL=your_apps_script_url`
+
+**Option B: Netlify CLI**
+```bash
+# Install Netlify CLI
+npm install -g netlify-cli
+
+# Deploy
+netlify deploy --prod
+```
+
+#### CI/CD Pipeline
+
+The repository includes a GitHub Actions workflow that validates the build process:
+
+- **Workflow**: `.github/workflows/validate-build.yml`
+- **Triggers**: On pull requests and pushes to main branch
+- **Purpose**: Ensures the build script works correctly before deployment
+
+The workflow:
+1. Checks out the code
+2. Sets up Node.js
+3. Runs the build script with a test API_URL
+4. Verifies that `config.js` is generated successfully
+
+This provides an extra layer of confidence before Netlify deploys the changes.
 
 4. **Test the Frontend**
    - Open your Netlify URL
@@ -207,7 +228,14 @@ This step is required for deploying the Apps Script as a web app that can be acc
 
 ### Environment Variables
 
-The `.env` file should be created in the root directory. See the Frontend Deployment section (Part 3, Step 1) above for details on creating and configuring this file.
+**For Netlify Deployment (Recommended):**
+- Configure `API_URL` directly in Netlify's environment variables dashboard
+- No `.env` file is needed when using GitHub + Netlify integration
+
+**For Local Development/Manual Deployment:**
+- Create a `.env` file in the root directory (already in `.gitignore`)
+- Add: `API_URL=https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec`
+- This is only needed for the legacy PowerShell build script (`build.ps1`)
 
 ### Google Sheet Column Mapping
 
