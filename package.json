@@ -1,0 +1,19 @@
+{
+  "name": "mela2025-entry-system",
+  "version": "1.0.0",
+  "description": "QR code-based entry pass system for Mela 2025",
+  "scripts": {
+    "build": "node build.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sameersegal/Mela2025.git"
+  },
+  "keywords": [
+    "qr-code",
+    "entry-system",
+    "netlify"
+  ],
+  "author": "",
+  "license": "ISC"
+}
