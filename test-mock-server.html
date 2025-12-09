@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Mock Server Test</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    h1 { color: #667eea; }
+    .test-button {
+      background: #667eea;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      margin: 10px 5px;
+    }
+    .test-button:hover {
+      background: #5568d3;
+    }
+    .result {
+      margin: 20px 0;
+      padding: 15px;
+      border-radius: 5px;
+      background: #f8f9fa;
+      white-space: pre-wrap;
+      font-family: monospace;
+    }
+    .success {
+      border-left: 4px solid #22c55e;
+      background: #f0fdf4;
+    }
+    .error {
+      border-left: 4px solid #ef4444;
+      background: #fef2f2;
+    }
+    .info {
+      border-left: 4px solid #3b82f6;
+      background: #eff6ff;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🧪 Mock Server Test Suite</h1>
+    <p>Use this page to test the mock server API endpoints.</p>
+    
+    <h2>Quick Tests</h2>
+    <button class="test-button" onclick="testValid()">Test Valid Ticket</button>
+    <button class="test-button" onclick="testUsed()">Test Used Ticket</button>
+    <button class="test-button" onclick="testInvalid()">Test Invalid Ticket</button>
+    <button class="test-button" onclick="testDoubleScanhow()">Test Double Scan</button>
+    <button class="test-button" onclick="runAllTests()">Run All Tests</button>
+    
+    <div id="results"></div>
+  </div>
+
+  <script>
+    const API_URL = "http://localhost:3000";
+    const resultsDiv = document.getElementById('results');
+
+    async function testTicket(ticketId, expectedResult, description) {
+      try {
+        const response = await fetch(API_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ ticketId })
+        });
+        
+        const data = await response.json();
+        
+        const passed = data.result === expectedResult;
+        const className = passed ? 'success' : 'error';
+        
+        return {
+          passed,
+          html: `
+            <div class="result ${className}">
+              <strong>${passed ? '✓' : '✗'} ${description}</strong>
+              Ticket: ${ticketId}
+              Expected: ${expectedResult}
+              Got: ${data.result}
+              
+              Response:
+              ${JSON.stringify(data, null, 2)}
+            </div>
+          `
+        };
+      } catch (error) {
+        return {
+          passed: false,
+          html: `
+            <div class="result error">
+              <strong>✗ ${description}</strong>
+              Error: ${error.message}
+              
+              Make sure mock server is running: node mock-server.js
+            </div>
+          `
+        };
+      }
+    }
+
+    async function testValid() {
+      resultsDiv.innerHTML = '<div class="result info">Testing...</div>';
+      const result = await testTicket('MELA25-ABC12', 'VALID', 'Valid Ticket Test');
+      resultsDiv.innerHTML = result.html;
+    }
+
+    async function testUsed() {
+      resultsDiv.innerHTML = '<div class="result info">Testing...</div>';
+      const result = await testTicket('MELA25-USED1', 'ALREADY_USED', 'Pre-Used Ticket Test');
+      resultsDiv.innerHTML = result.html;
+    }
+
+    async function testInvalid() {
+      resultsDiv.innerHTML = '<div class="result info">Testing...</div>';
+      const result = await testTicket('MELA25-XXXXX', 'INVALID', 'Invalid Ticket Test');
+      resultsDiv.innerHTML = result.html;
+    }
+
+    async function testDoubleScan() {
+      resultsDiv.innerHTML = '<div class="result info">Testing double scan...</div>';
+      
+      // First scan
+      const first = await testTicket('MELA25-XYZ99', 'VALID', 'First Scan');
+      
+      // Wait a bit
+      await new Promise(resolve => setTimeout(resolve, 500));
+      
+      // Second scan (should be ALREADY_USED)
+      const second = await testTicket('MELA25-XYZ99', 'ALREADY_USED', 'Second Scan (should be used)');
+      
+      resultsDiv.innerHTML = first.html + second.html;
+    }
+
+    async function runAllTests() {
+      resultsDiv.innerHTML = '<div class="result info">Running all tests...</div>';
+      
+      const tests = [
+        testTicket('MELA25-VALID1', 'VALID', 'Test 1: Valid Ticket'),
+        testTicket('MELA25-USED2', 'ALREADY_USED', 'Test 2: Pre-Used Ticket'),
+        testTicket('MELA25-FAKE99', 'INVALID', 'Test 3: Invalid Ticket'),
+      ];
+      
+      const results = await Promise.all(tests);
+      
+      // Add double scan test
+      await new Promise(resolve => setTimeout(resolve, 500));
+      const doubleScan1 = await testTicket('MELA25-VALID2', 'VALID', 'Test 4a: Fresh Valid Ticket');
+      await new Promise(resolve => setTimeout(resolve, 500));
+      const doubleScan2 = await testTicket('MELA25-VALID2', 'ALREADY_USED', 'Test 4b: Same Ticket (should be used)');
+      
+      const passed = results.filter(r => r.passed).length + (doubleScan1.passed ? 1 : 0) + (doubleScan2.passed ? 1 : 0);
+      const total = results.length + 2;
+      
+      let html = `
+        <div class="result ${passed === total ? 'success' : 'error'}">
+          <strong>Test Summary: ${passed}/${total} tests passed</strong>
+        </div>
+      `;
+      
+      html += results.map(r => r.html).join('');
+      html += doubleScan1.html + doubleScan2.html;
+      
+      resultsDiv.innerHTML = html;
+    }
+
+    // Show connection info on load
+    window.addEventListener('DOMContentLoaded', () => {
+      resultsDiv.innerHTML = `
+        <div class="result info">
+          <strong>Ready to test!</strong>
+          
+          API URL: ${API_URL}
+          
+          Make sure the mock server is running:
+          <code>node mock-server.js</code>
+        </div>
+      `;
+    });
+  </script>
+</body>
+</html>
