@@ -270,14 +270,10 @@
   <script src="config.js"></script>
   <script>
     let html5QrCode;
+    // Cache DOM elements for better performance
+    let resultBox, statusHeader, details, scannerBox, manualEntry, manualInput;
 
     function showResult(resp) {
-      const resultBox = document.getElementById("resultBox");
-      const statusHeader = document.getElementById("statusHeader");
-      const details = document.getElementById("details");
-      const scannerBox = document.querySelector(".scanner-box");
-      const manualEntry = document.querySelector(".manual-entry");
-
       // Compress the scanner box and manual entry to show more details
       scannerBox.classList.add("compressed");
       manualEntry.classList.add("compressed");
@@ -366,7 +362,7 @@
     }
 
     function submitManual() {
-      const input = document.getElementById("manualInput").value.trim().toUpperCase();
+      const input = manualInput.value.trim().toUpperCase();
       if (!input) {
         alert("Please enter a ticket code");
         return;
@@ -377,11 +373,8 @@
     }
 
     function resetScanner() {
-      const scannerBox = document.querySelector(".scanner-box");
-      const manualEntry = document.querySelector(".manual-entry");
-      
-      document.getElementById("resultBox").style.display = "none";
-      document.getElementById("manualInput").value = "";
+      resultBox.style.display = "none";
+      manualInput.value = "";
       
       // Expand the scanner box and manual entry back to normal
       scannerBox.classList.remove("compressed");
@@ -392,9 +385,17 @@
       }
     }
 
-    // Allow Enter key to submit
+    // Allow Enter key to submit and initialize cached DOM elements
     document.addEventListener('DOMContentLoaded', function() {
-      document.getElementById("manualInput").addEventListener("keypress", function(e) {
+      // Initialize cached DOM elements
+      resultBox = document.getElementById("resultBox");
+      statusHeader = document.getElementById("statusHeader");
+      details = document.getElementById("details");
+      scannerBox = document.querySelector(".scanner-box");
+      manualEntry = document.querySelector(".manual-entry");
+      manualInput = document.getElementById("manualInput");
+      
+      manualInput.addEventListener("keypress", function(e) {
         if (e.key === "Enter") {
           submitManual();
         }
