@@ -199,6 +199,22 @@ npm install -g netlify-cli
 netlify deploy --prod
 ```
 
+#### CI/CD Pipeline
+
+The repository includes a GitHub Actions workflow that validates the build process:
+
+- **Workflow**: `.github/workflows/validate-build.yml`
+- **Triggers**: On pull requests and pushes to main branch
+- **Purpose**: Ensures the build script works correctly before deployment
+
+The workflow:
+1. Checks out the code
+2. Sets up Node.js
+3. Runs the build script with a test API_URL
+4. Verifies that `config.js` is generated successfully
+
+This provides an extra layer of confidence before Netlify deploys the changes.
+
 4. **Test the Frontend**
    - Open your Netlify URL
    - Try scanning the QR code from the test email

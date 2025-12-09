@@ -1,0 +1,31 @@
+name: Validate Build
+
+on:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+    
+    - name: Test build script
+      run: |
+        API_URL="https://example.com/test" npm run build
+        
+    - name: Verify config.js was generated
+      run: |
+        if [ ! -f config.js ]; then
+          echo "Error: config.js was not generated"
+          exit 1
+        fi
+        echo "✅ Build validation successful"
