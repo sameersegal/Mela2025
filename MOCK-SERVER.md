@@ -5,10 +5,10 @@ A simple Node.js mock server for testing the Mela 2025 frontend locally without 
 ## Features
 
 - Zero external dependencies (uses only Node.js built-in modules)
+- Serves the frontend HTML page directly
 - Multiple test scenarios: valid, invalid, and already-used tickets
 - CORS enabled for local testing
 - Session tracking to simulate "used" ticket behavior
-- Built-in info page with test ticket documentation
 
 ## Quick Start
 
@@ -26,11 +26,9 @@ node mock-server.js 8080
 
 ### 2. Open the Frontend
 
-Open `index.html` in your browser. The default `config.js` already points to `http://localhost:3000`.
+Open your browser and navigate to `http://localhost:3000/`
 
-You can:
-- Use a simple HTTP server: `python -m http.server 8000`
-- Or open the file directly in your browser
+The mock server serves the `index.html` page directly - no need for a separate HTTP server!
 
 **For production:** Update `config.js` with your Google Apps Script URL, or use the build script which generates it from `.env`.
 

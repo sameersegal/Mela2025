@@ -14,6 +14,8 @@
 
 const http = require('http');
 const url = require('url');
+const fs = require('fs');
+const path = require('path');
 
 const PORT = process.argv[2] || 3000;
 
@@ -164,139 +166,35 @@ const server = http.createServer((req, res) => {
     return;
   }
   
-  // Handle GET request - show info page
+  // Handle GET request for root - serve index.html
   if (req.method === 'GET' && parsedUrl.pathname === '/') {
-    res.writeHead(200, { 'Content-Type': 'text/html' });
-    res.end(`
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Mela 2025 Mock Server</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      max-width: 800px;
-      margin: 50px auto;
-      padding: 20px;
-      background: #f5f5f5;
-    }
-    .container {
-      background: white;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }
-    h1 { color: #667eea; }
-    h2 { color: #333; margin-top: 30px; }
-    .status { 
-      display: inline-block;
-      padding: 5px 10px;
-      border-radius: 5px;
-      font-weight: bold;
-      margin-left: 10px;
-    }
-    .status.running { background: #d4edda; color: #155724; }
-    code {
-      background: #f4f4f4;
-      padding: 2px 6px;
-      border-radius: 3px;
-      font-family: monospace;
-    }
-    .ticket-list {
-      display: grid;
-      gap: 10px;
-      margin-top: 15px;
-    }
-    .ticket {
-      background: #f8f9fa;
-      padding: 10px 15px;
-      border-radius: 5px;
-      border-left: 4px solid #667eea;
-    }
-    .ticket.used {
-      border-left-color: #f59e0b;
-    }
-    .ticket strong {
-      font-family: monospace;
-      color: #667eea;
-    }
-    .endpoint {
-      background: #e7f3ff;
-      padding: 15px;
-      border-radius: 5px;
-      margin: 15px 0;
-    }
-    ul { line-height: 1.8; }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h1>🎉 Mela 2025 Mock Server</h1>
-    <span class="status running">✓ Running on port ${PORT}</span>
-    
-    <h2>📡 API Endpoint</h2>
-    <div class="endpoint">
-      <strong>POST</strong> <code>http://localhost:${PORT}/</code>
-    </div>
-    
-    <h2>🎫 Test Tickets</h2>
-    
-    <h3>✓ Valid Tickets (will show details)</h3>
-    <div class="ticket-list">
-      <div class="ticket">
-        <strong>MELA25-VALID1</strong> - John Doe (Student, 2 people)
-      </div>
-      <div class="ticket">
-        <strong>MELA25-VALID2</strong> - Jane Smith (Teacher, 1 person)
-      </div>
-      <div class="ticket">
-        <strong>MELA25-ABC12</strong> - Alice Johnson (Parent, 3 people)
-      </div>
-      <div class="ticket">
-        <strong>MELA25-XYZ99</strong> - Bob Williams (Guest, 1 person)
-      </div>
-    </div>
-    
-    <h3>⚠ Already Used Tickets (pre-configured)</h3>
-    <div class="ticket-list">
-      <div class="ticket used">
-        <strong>MELA25-USED1</strong> - Will always return ALREADY_USED
-      </div>
-      <div class="ticket used">
-        <strong>MELA25-USED2</strong> - Will always return ALREADY_USED
-      </div>
-      <div class="ticket used">
-        <strong>MELA25-OLD99</strong> - Will always return ALREADY_USED
-      </div>
-    </div>
-    
-    <h3>✖ Invalid Tickets (not in system)</h3>
-    <div class="ticket-list">
-      <div class="ticket">
-        Any ticket ID not listed above will return <strong>INVALID</strong>
-      </div>
-    </div>
-    
-    <h2>🔄 Usage</h2>
-    <ul>
-      <li>Update <code>config.js</code> to point to <code>http://localhost:${PORT}</code></li>
-      <li>Open <code>index.html</code> in a browser</li>
-      <li>Scan or manually enter test ticket codes</li>
-      <li>Valid tickets become "used" after first scan in this session</li>
-      <li>Restart server to reset "used" tickets</li>
-    </ul>
-    
-    <h2>📝 Notes</h2>
-    <ul>
-      <li>Server logs all requests to console</li>
-      <li>CORS is enabled for all origins</li>
-      <li>No external dependencies required</li>
-      <li>Session state resets on server restart</li>
-    </ul>
-  </div>
-</body>
-</html>
-    `);
+    const indexPath = path.join(__dirname, 'index.html');
+    fs.readFile(indexPath, 'utf8', (err, data) => {
+      if (err) {
+        res.writeHead(500, { 'Content-Type': 'text/plain' });
+        res.end('Error loading index.html');
+        console.error('Error reading index.html:', err);
+        return;
+      }
+      res.writeHead(200, { 'Content-Type': 'text/html' });
+      res.end(data);
+    });
+    return;
+  }
+  
+  // Handle GET request for config.js
+  if (req.method === 'GET' && parsedUrl.pathname === '/config.js') {
+    const configPath = path.join(__dirname, 'config.js');
+    fs.readFile(configPath, 'utf8', (err, data) => {
+      if (err) {
+        res.writeHead(500, { 'Content-Type': 'text/plain' });
+        res.end('Error loading config.js');
+        console.error('Error reading config.js:', err);
+        return;
+      }
+      res.writeHead(200, { 'Content-Type': 'application/javascript' });
+      res.end(data);
+    });
     return;
   }
   
@@ -312,8 +210,8 @@ server.listen(PORT, () => {
   console.log('║     🎉 Mela 2025 Mock Server - Running!            ║');
   console.log('╚═══════════════════════════════════════════════════════╝');
   console.log('');
-  console.log(`  📡 API Endpoint:  http://localhost:${PORT}/`);
-  console.log(`  📖 Info Page:     http://localhost:${PORT}/`);
+  console.log(`  🌐 Frontend:      http://localhost:${PORT}/`);
+  console.log(`  📡 API Endpoint:  POST http://localhost:${PORT}/`);
   console.log('');
   console.log('  🎫 Test Tickets:');
   console.log('     Valid:   MELA25-VALID1, MELA25-VALID2, MELA25-ABC12, MELA25-XYZ99');

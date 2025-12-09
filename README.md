@@ -53,8 +53,8 @@ For local frontend development without requiring the Google Apps Script backend,
 # 1. Start the mock server
 node mock-server.js
 
-# 2. Open index.html in your browser
-# The default config.js points to http://localhost:3000
+# 2. Open http://localhost:3000/ in your browser
+# The mock server serves index.html directly!
 ```
 
 ### Test Tickets
