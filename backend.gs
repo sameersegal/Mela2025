@@ -1,3 +1,12 @@
+// Handle GET requests (for CORS preflight and testing)
+function doGet(e) {
+  // If ticketId is passed as query parameter, process it (read-only check)
+  if (e && e.parameter && e.parameter.ticketId) {
+    return checkTicket(e.parameter.ticketId, false); // false = don't mark as used
+  }
+  return jsonResponse({ result: "OK", message: "Service is running" });
+}
+
 function doPost(e) {
   const data = JSON.parse(e.postData.contents);
   const ticketId = data.ticketId;
@@ -48,8 +57,13 @@ function doPost(e) {
   return jsonWithCors({ result: "INVALID" });
 }
 
-function jsonWithCors(obj) {
+function jsonResponse(obj) {
   return ContentService
     .createTextOutput(JSON.stringify(obj))
     .setMimeType(ContentService.MimeType.JSON);
+}
+
+// Alias for backward compatibility
+function jsonWithCors(obj) {
+  return jsonResponse(obj);
 }
