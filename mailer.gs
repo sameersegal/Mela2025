@@ -2,6 +2,17 @@
  * @OnlyCurrentDoc
  */
 
+// Column mapping (1-based indices):
+const colTimestamp     = 1;  // A
+const colName          = 2;  // B
+const colEmail         = 3;  // C
+const colIAm           = 4;  // D
+const colNumPeople     = 5;  // E
+const colTransport     = 6;  // F
+const colTicketId      = 7;  // G (Mela Pass)
+const colEntryStatus   = 8;  // H
+const colMailerStatus  = 9;  // I
+
 /**************************************************************
  * 1. Generate a 5-char alphanumeric code (A–Z, 0–9)
  **************************************************************/
@@ -22,7 +33,7 @@ function generateUniqueId(sheet) {
   var existingIds = [];
 
   if (lastRow > 1) {
-    existingIds = sheet.getRange(2, 8, lastRow - 1, 1)
+    existingIds = sheet.getRange(2, colTicketId, lastRow - 1, 1)
       .getValues()
       .flat()
       .filter(String); // Remove empty cells
@@ -55,13 +66,13 @@ function generateQRCodeAndEmail(e) {
   // Read all data for this row
   var rowData = sheet.getRange(row, 1, 1, sheet.getLastColumn()).getValues()[0];
 
-  var name = rowData[1];            // Column B
-  var email = rowData[2];           // Column C
-  var numberOfPeople = rowData[4];  // Column E
+  var name = rowData[colName - 1];            // Column B
+  var email = rowData[colEmail - 1];          // Column C
+  var numberOfPeople = rowData[colNumPeople - 1];  // Column E
 
   // Columns for status tracking
-  var uniqueIdCell = sheet.getRange(row, 7); // Column G
-  var statusCell   = sheet.getRange(row, 9); // Column I
+  var uniqueIdCell = sheet.getRange(row, colTicketId); // Column G
+  var statusCell   = sheet.getRange(row, colMailerStatus); // Column I
 
   // Prevent duplicate sending
   if (statusCell.getValue() === "SENT") {
