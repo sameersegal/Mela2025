@@ -22,7 +22,7 @@ function doPost(e) {
       const status = values[i][colEntryStatus - 1];
 
       if (status === "used") {
-        return json({ result: "ALREADY_USED" });
+        return jsonWithCors({ result: "ALREADY_USED" });
       }
 
       // mark as used
@@ -31,7 +31,7 @@ function doPost(e) {
       sheet.getRange(i + 1, colTimestamp).setValue(new Date());
 
       // return ticket info
-      return json({
+      return jsonWithCors({
         result: "VALID",
         name:            values[i][colName - 1],
         email:           values[i][colEmail - 1],
@@ -45,10 +45,10 @@ function doPost(e) {
     }
   }
 
-  return json({ result: "INVALID" });
+  return jsonWithCors({ result: "INVALID" });
 }
 
-function json(obj) {
+function jsonWithCors(obj) {
   return ContentService
     .createTextOutput(JSON.stringify(obj))
     .setMimeType(ContentService.MimeType.JSON);

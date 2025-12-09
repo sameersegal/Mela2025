@@ -145,6 +145,72 @@
     .reset-btn:active {
       transform: scale(0.98);
     }
+
+    .manual-entry {
+      background: white;
+      border-radius: 15px;
+      padding: 25px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      margin-top: 20px;
+    }
+
+    .manual-entry h3 {
+      color: #1e293b;
+      margin-bottom: 15px;
+      font-size: 1.2em;
+    }
+
+    .input-group {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .prefix {
+      background: #f1f5f9;
+      padding: 12px 15px;
+      border-radius: 8px;
+      font-weight: 600;
+      color: #64748b;
+      font-family: monospace;
+      font-size: 1.1em;
+    }
+
+    #manualInput {
+      flex: 1;
+      padding: 12px 15px;
+      border: 2px solid #e2e8f0;
+      border-radius: 8px;
+      font-size: 1.1em;
+      font-family: monospace;
+      text-transform: uppercase;
+    }
+
+    #manualInput:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    .submit-btn {
+      padding: 12px 25px;
+      background: #667eea;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s;
+      white-space: nowrap;
+    }
+
+    .submit-btn:hover {
+      background: #5568d3;
+    }
+
+    .submit-btn:active {
+      transform: scale(0.98);
+    }
   </style>
 </head>
 
@@ -154,6 +220,15 @@
 
     <div class="scanner-box">
       <div id="reader"></div>
+    </div>
+
+    <div class="manual-entry">
+      <h3>📝 Manual Entry</h3>
+      <div class="input-group">
+        <span class="prefix">MELA25-</span>
+        <input type="text" id="manualInput" placeholder="Enter code (e.g., QZ0R0)" maxlength="10" />
+        <button class="submit-btn" onclick="submitManual()">Check</button>
+      </div>
     </div>
 
     <div class="result-box" id="resultBox">
@@ -224,28 +299,65 @@
     }
 
     function onScanSuccess(qr) {
-      html5QrCode.pause();
+      processTicket(qr);
+    }
+
+    function processTicket(ticketId) {
+      if (html5QrCode) {
+        html5QrCode.pause();
+      }
+      
+      console.log("Processing ticket:", ticketId);
+      console.log("Sending to API:", API_URL);
       
       fetch(API_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({ ticketId: qr })
+        body: JSON.stringify({ ticketId: ticketId })
       })
-      .then(r => r.json())
+      .then(r => {
+        console.log("Response status:", r.status);
+        return r.json();
+      })
       .then(resp => {
+        console.log("Response data:", resp);
         showResult(resp);
       })
-      .catch(() => {
+      .catch(err => {
+        console.error("Error:", err);
         showResult({ result: "ERROR" });
       });
     }
 
+    function submitManual() {
+      const input = document.getElementById("manualInput").value.trim().toUpperCase();
+      if (!input) {
+        alert("Please enter a ticket code");
+        return;
+      }
+      
+      const fullTicketId = "MELA25-" + input;
+      processTicket(fullTicketId);
+    }
+
     function resetScanner() {
       document.getElementById("resultBox").style.display = "none";
-      html5QrCode.resume();
+      document.getElementById("manualInput").value = "";
+      if (html5QrCode) {
+        html5QrCode.resume();
+      }
     }
+
+    // Allow Enter key to submit
+    document.addEventListener('DOMContentLoaded', function() {
+      document.getElementById("manualInput").addEventListener("keypress", function(e) {
+        if (e.key === "Enter") {
+          submitManual();
+        }
+      });
+    });
 
     html5QrCode = new Html5Qrcode("reader");
     html5QrCode.start(
