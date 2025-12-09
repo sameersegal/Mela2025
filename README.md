@@ -151,7 +151,7 @@ This step is required for deploying the Apps Script as a web app that can be acc
 
 1. **Configure the Frontend**
    - Create a `.env` file in the project root (or update existing one):
-     ```
+     ```env
      API_URL=https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec
      ```
      Replace `YOUR_DEPLOYMENT_ID` with the ID from your Apps Script Web App URL
@@ -207,11 +207,7 @@ This step is required for deploying the Apps Script as a web app that can be acc
 
 ### Environment Variables
 
-Create a `.env` file in the root directory:
-
-```env
-API_URL=https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec
-```
+The `.env` file should be created in the root directory. See the Frontend Deployment section (Part 3, Step 1) above for details on creating and configuring this file.
 
 ### Google Sheet Column Mapping
 
