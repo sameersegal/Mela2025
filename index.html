@@ -39,6 +39,19 @@
       padding: 20px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.3);
       margin-bottom: 20px;
+      transition: max-height 0.4s ease, padding 0.4s ease, margin-bottom 0.4s ease;
+      max-height: 600px;
+      overflow: hidden;
+    }
+
+    .scanner-box.compressed {
+      max-height: 100px;
+      padding: 10px 20px;
+      margin-bottom: 15px;
+    }
+
+    .scanner-box.compressed #reader {
+      height: 80px;
     }
 
     #reader {
@@ -152,6 +165,21 @@
       padding: 25px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.3);
       margin-top: 20px;
+      transition: padding 0.4s ease, margin-top 0.4s ease;
+    }
+
+    .manual-entry.compressed {
+      padding: 15px;
+      margin-top: 10px;
+    }
+
+    .manual-entry.compressed h3 {
+      font-size: 1em;
+      margin-bottom: 10px;
+    }
+
+    .manual-entry.compressed .input-group {
+      flex-wrap: wrap;
     }
 
     .manual-entry h3 {
@@ -241,12 +269,13 @@
   <script src="config.js"></script>
   <script>
     let html5QrCode;
+    // Cache DOM elements for better performance
+    let resultBox, statusHeader, details, scannerBox, manualEntry, manualInput;
 
     function showResult(resp) {
-      const resultBox = document.getElementById("resultBox");
-      const statusHeader = document.getElementById("statusHeader");
-      const details = document.getElementById("details");
-
+      // Compress the scanner box and manual entry to show more details
+      scannerBox.classList.add("compressed");
+      manualEntry.classList.add("compressed");
       resultBox.style.display = "block";
 
       if (resp.result === "VALID") {
@@ -332,7 +361,7 @@
     }
 
     function submitManual() {
-      const input = document.getElementById("manualInput").value.trim().toUpperCase();
+      const input = manualInput.value.trim().toUpperCase();
       if (!input) {
         alert("Please enter a ticket code");
         return;
@@ -343,16 +372,29 @@
     }
 
     function resetScanner() {
-      document.getElementById("resultBox").style.display = "none";
-      document.getElementById("manualInput").value = "";
+      resultBox.style.display = "none";
+      manualInput.value = "";
+      
+      // Expand the scanner box and manual entry back to normal
+      scannerBox.classList.remove("compressed");
+      manualEntry.classList.remove("compressed");
+      
       if (html5QrCode) {
         html5QrCode.resume();
       }
     }
 
-    // Allow Enter key to submit
+    // Allow Enter key to submit and initialize cached DOM elements
     document.addEventListener('DOMContentLoaded', function() {
-      document.getElementById("manualInput").addEventListener("keypress", function(e) {
+      // Initialize cached DOM elements
+      resultBox = document.getElementById("resultBox");
+      statusHeader = document.getElementById("statusHeader");
+      details = document.getElementById("details");
+      scannerBox = document.querySelector(".scanner-box");
+      manualEntry = document.querySelector(".manual-entry");
+      manualInput = document.getElementById("manualInput");
+      
+      manualInput.addEventListener("keypress", function(e) {
         if (e.key === "Enter") {
           submitManual();
         }
