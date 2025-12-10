@@ -31,7 +31,16 @@ function doPost(e) {
       const status = values[i][colEntryStatus - 1];
 
       if (status === "used") {
-        return jsonWithCors({ result: "ALREADY_USED" });
+        // Return ticket details even for already used tickets, but without email
+        return jsonWithCors({
+          result: "ALREADY_USED",
+          name:            values[i][colName - 1],
+          iAm:             values[i][colIAm - 1],
+          numberOfPeople:  values[i][colNumPeople - 1],
+          transport:       values[i][colTransport - 1],
+          ticketId:        values[i][colTicketId - 1],
+          entryStatus:     "used"
+        });
       }
 
       // mark as used
@@ -39,17 +48,15 @@ function doPost(e) {
       // update timestamp
       sheet.getRange(i + 1, colTimestamp).setValue(new Date());
 
-      // return ticket info
+      // return ticket info (without email for privacy)
       return jsonWithCors({
         result: "VALID",
         name:            values[i][colName - 1],
-        email:           values[i][colEmail - 1],
         iAm:             values[i][colIAm - 1],
         numberOfPeople:  values[i][colNumPeople - 1],
         transport:       values[i][colTransport - 1],
         ticketId:        values[i][colTicketId - 1],
-        entryStatus:     "used",
-        mailerStatus:    values[i][colMailerStatus - 1]
+        entryStatus:     "used"
       });
     }
   }
