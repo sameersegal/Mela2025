@@ -61,8 +61,7 @@ This step is required for deploying the Apps Script as a web app that can be acc
    - In the Cloud Console, navigate to "APIs & Services" > "Library"
    - Enable the following APIs:
      - Google Sheets API
-     - Gmail API (for sending emails)
-     - Google Apps Script API
+     - Google Drive API
 
 3. **Configure OAuth Consent Screen** (For Personal Use)
    - Navigate to "APIs & Services" > "OAuth consent screen"
@@ -73,7 +72,7 @@ This step is required for deploying the Apps Script as a web app that can be acc
      - Developer contact: Your email
    - Add scopes:
      - `https://www.googleapis.com/auth/spreadsheets`
-     - `https://www.googleapis.com/auth/gmail.send`
+     - `https://www.googleapis.com/auth/drive`
    - Add test users (your Google account email)
    - Save and continue
 
