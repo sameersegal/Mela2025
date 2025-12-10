@@ -30,8 +30,7 @@ const MOCK_TICKETS = {
     numberOfPeople: 2,
     transport: 'Own Transport',
     ticketId: 'MELA25-VALID1',
-    entryStatus: 'valid',
-    mailerStatus: 'SENT'
+    entryStatus: 'valid'
   },
   'MELA25-VALID2': {
     result: 'VALID',
@@ -41,8 +40,7 @@ const MOCK_TICKETS = {
     numberOfPeople: 1,
     transport: 'Bus',
     ticketId: 'MELA25-VALID2',
-    entryStatus: 'valid',
-    mailerStatus: 'SENT'
+    entryStatus: 'valid'
   },
   'MELA25-ABC12': {
     result: 'VALID',
@@ -52,8 +50,7 @@ const MOCK_TICKETS = {
     numberOfPeople: 3,
     transport: 'Own Transport',
     ticketId: 'MELA25-ABC12',
-    entryStatus: 'valid',
-    mailerStatus: 'SENT'
+    entryStatus: 'valid'
   },
   'MELA25-XYZ99': {
     result: 'VALID',
@@ -63,19 +60,39 @@ const MOCK_TICKETS = {
     numberOfPeople: 1,
     transport: 'Bus',
     ticketId: 'MELA25-XYZ99',
-    entryStatus: 'valid',
-    mailerStatus: 'SENT'
+    entryStatus: 'valid'
   },
   
-  // Already used tickets
+  // Already used tickets - include full details
   'MELA25-USED1': {
-    result: 'ALREADY_USED'
+    result: 'ALREADY_USED',
+    name: 'Sarah Brown',
+    email: 'sarah.b@example.com',
+    iAm: 'Student',
+    numberOfPeople: 1,
+    transport: 'Own Transport',
+    ticketId: 'MELA25-USED1',
+    entryStatus: 'used'
   },
   'MELA25-USED2': {
-    result: 'ALREADY_USED'
+    result: 'ALREADY_USED',
+    name: 'Michael Chen',
+    email: 'michael.c@example.com',
+    iAm: 'Teacher',
+    numberOfPeople: 2,
+    transport: 'Bus',
+    ticketId: 'MELA25-USED2',
+    entryStatus: 'used'
   },
   'MELA25-OLD99': {
-    result: 'ALREADY_USED'
+    result: 'ALREADY_USED',
+    name: 'Emma Wilson',
+    email: 'emma.w@example.com',
+    iAm: 'Parent',
+    numberOfPeople: 4,
+    transport: 'Own Transport',
+    ticketId: 'MELA25-OLD99',
+    entryStatus: 'used'
   }
 };
 
@@ -106,14 +123,15 @@ function handleTicketValidation(req, res) {
         // If ticket is already marked as ALREADY_USED in mock data
         if (ticket.result === 'ALREADY_USED') {
           console.log(`  → Result: ALREADY_USED (pre-configured)`);
-          sendResponse(res, 200, { result: 'ALREADY_USED' });
+          sendResponse(res, 200, ticket);
           return;
         }
         
         // If ticket was scanned in this session
         if (scannedTickets.has(ticketId)) {
           console.log(`  → Result: ALREADY_USED (scanned in session)`);
-          sendResponse(res, 200, { result: 'ALREADY_USED' });
+          // Return full ticket details with ALREADY_USED status
+          sendResponse(res, 200, { ...ticket, result: 'ALREADY_USED' });
           return;
         }
         

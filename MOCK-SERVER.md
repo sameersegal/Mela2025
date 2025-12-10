@@ -89,9 +89,18 @@ Any other ticket ID (e.g., `MELA25-XXXXX`) returns "INVALID"
 **Response (Already Used):**
 ```json
 {
-  "result": "ALREADY_USED"
+  "result": "ALREADY_USED",
+  "name": "Sarah Brown",
+  "email": "sarah.b@example.com",
+  "iAm": "Student",
+  "numberOfPeople": 1,
+  "transport": "Own Transport",
+  "ticketId": "MELA25-USED1",
+  "entryStatus": "used"
 }
 ```
+
+**Note:** Already-used tickets include full details so the frontend can display who the ticket belongs to.
 
 **Response (Invalid):**
 ```json
