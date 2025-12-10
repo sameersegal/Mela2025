@@ -55,7 +55,6 @@ This step is required for deploying the Apps Script as a web app that can be acc
 1. **Create a Google Cloud Project**
    - Go to [Google Cloud Console](https://console.cloud.google.com/)
    - Create a new project or select an existing one
-   - Note your Project Number (you'll need this later)
 
 2. **Enable Required APIs**
    - In the Cloud Console, navigate to "APIs & Services" > "Library"
@@ -70,11 +69,21 @@ This step is required for deploying the Apps Script as a web app that can be acc
      - App name: "Mela 2025 Entry System"
      - User support email: Your email
      - Developer contact: Your email
+   - Once create, again navigate to "APIs & Services" > "OAuth consent screen"
+   - Select "Data Access" on the left side menu
    - Add scopes:
      - `https://www.googleapis.com/auth/spreadsheets`
      - `https://www.googleapis.com/auth/drive`
+   - Once create, again navigate to "APIs & Services" > "OAuth consent screen"
+   - Select "Audience" on the left side menu
    - Add test users (your Google account email)
    - Save and continue
+
+  4. **Get Project Number**
+    - In the Cloud Console, ensure the right project is selected
+    - Click on the 3 dots next to your name / photo on the top right of the screen
+    - Click on Project Settings (last item in the menu)
+    - Copy the project number
 
 ### Part 2: Google Sheets & Apps Script Setup
 
@@ -106,8 +115,8 @@ This step is required for deploying the Apps Script as a web app that can be acc
    - Delete any default code
    - Create two script files:
      
-     **File 1: main.gs**
-     - Copy the contents of `main.gs` from this repository
+     **File 1: mailer.gs**
+     - Copy the contents of `mailer.gs` from this repository
      
      **File 2: backend.gs**
      - Copy the contents of `backend.gs` from this repository
@@ -130,7 +139,7 @@ This step is required for deploying the Apps Script as a web app that can be acc
 
 6. **Deploy as Web App**
    - Click on "Deploy" > "New deployment"
-   - Click on "Select type" > "Web app"
+   - Click on "Select type" > "Web app" (Gear icon)
    - Configure:
      - Description: "Mela 2025 Backend API"
      - Execute as: "Me"
