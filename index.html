@@ -290,10 +290,6 @@
             <span class="detail-value">${resp.name}</span>
           </div>
           <div class="detail-row">
-            <span class="detail-label">Email</span>
-            <span class="detail-value">${resp.email}</span>
-          </div>
-          <div class="detail-row">
             <span class="detail-label">Type</span>
             <span class="detail-value">${resp.iAm}</span>
           </div>
@@ -314,8 +310,28 @@
         statusHeader.className = "status-header status-used";
         statusHeader.innerHTML = "⚠ ALREADY USED";
         details.innerHTML = `
-          <div style="text-align: center; color: #92400e; font-size: 1.1em; padding: 20px;">
+          <div style="text-align: center; color: #92400e; font-size: 1.1em; padding: 20px; margin-bottom: 15px;">
             This ticket has already been scanned and cannot be used again.
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Name</span>
+            <span class="detail-value">${resp.name}</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Type</span>
+            <span class="detail-value">${resp.iAm}</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Number of People</span>
+            <span class="detail-value">${resp.numberOfPeople}</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Transport</span>
+            <span class="detail-value">${resp.transport}</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Ticket ID</span>
+            <span class="detail-value">${resp.ticketId}</span>
           </div>
         `;
       } else {
