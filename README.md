@@ -40,7 +40,7 @@ Google Form → Google Sheet → Apps Script Backend
 └── .env               # Configuration file (API URL)
 ```
 
-## 🚀 Deployment Guide
+## 🚀 Deployment Guide - One Time
 
 ### Prerequisites
 
@@ -154,6 +154,120 @@ This step is required for deploying the Apps Script as a web app that can be acc
      - A unique ID appears in column G (Mela Pass)
      - Status in column I shows "SENT"
      - You received an email with the QR code
+
+---
+
+## 🔄 Recurring Deployments (Updating an Existing Setup)
+
+If you already have a Google Cloud Project set up from a previous event and want to reuse it, follow these simpler steps.
+
+### Scenario A: Updating Scripts in an Existing Form
+
+#### Updating `mailer.gs` (Email/QR Code Generation)
+
+**No additional steps required!** 🎉
+
+1. Open your Google Sheet
+2. Go to **Extensions > Apps Script**
+3. Open the `mailer.gs` file
+4. Replace the code with the updated version
+5. Click **Save** (💾 icon or Ctrl+S)
+6. That's it! The trigger will automatically use the new code
+
+#### Updating `backend.gs` (Ticket Validation API)
+
+**You need to create a new Web App deployment:**
+
+1. Open your Google Sheet
+2. Go to **Extensions > Apps Script**
+3. Open the `backend.gs` file
+4. Replace the code with the updated version
+5. Click **Save** (💾 icon or Ctrl+S)
+6. Click **Deploy** > **Manage deployments**
+7. Click the **pencil icon** (✏️) to edit the existing deployment
+8. Under "Version", select **New version**
+9. Click **Deploy**
+10. **Important**: The URL stays the same, so no changes needed on the frontend!
+
+> ⚠️ **Note**: If you create a "New deployment" instead of editing the existing one, you'll get a new URL and will need to update your `.env` file and redeploy the frontend.
+
+### Scenario B: Creating a New Form (New Event/Year)
+
+If you're setting up a completely new Google Form (e.g., for a new year's event), follow these steps:
+
+1. **Create the New Google Form**
+   - Create a new Google Form with the required fields (see Part 2, Step 1 in the One-Time Setup)
+   - Link it to a new Google Sheet
+
+2. **Prepare the Google Sheet**
+   - Rename the responses sheet to "Registrations"
+   - Ensure columns match the expected structure (see Part 2, Step 2)
+
+3. **Add the Scripts**
+   - Go to **Extensions > Apps Script**
+   - Create `mailer.gs` and paste the code
+   - Create `backend.gs` and paste the code
+   - Click **Save**
+
+4. **Link to Your Existing Google Cloud Project**
+   - In Apps Script editor, click the **gear icon** (Project Settings)
+   - Under "Google Cloud Platform (GCP) Project", click **Change project**
+   - Enter your **existing** GCP Project Number (see [How to Get Your Project Number](#how-to-get-your-project-number) below)
+   - Click **Set project**
+
+5. **Set Up the Form Submit Trigger**
+   - Click the **clock icon** (Triggers) in the sidebar
+   - Click **+ Add Trigger**
+   - Configure:
+     - Function: `generateQRCodeAndEmail`
+     - Event source: `From spreadsheet`
+     - Event type: `On form submit`
+   - Click **Save** and grant permissions
+
+6. **Deploy as Web App**
+   - Click **Deploy** > **New deployment**
+   - Select type: **Web app**
+   - Configure:
+     - Execute as: "Me"
+     - Who has access: "Anyone"
+   - Click **Deploy**
+   - **Copy the new Web App URL**
+
+7. **Update the Frontend**
+   - Update your `.env` file with the new API URL:
+     ```env
+     API_URL=https://script.google.com/macros/s/NEW_DEPLOYMENT_ID/exec
+     ```
+   - Run `.\build.ps1` to create a new zip
+   - Redeploy to Netlify (drag & drop the new zip)
+
+8. **Test Everything**
+   - Submit a test form entry
+   - Verify email is received with QR code
+   - Test scanning on the frontend
+
+### Quick Reference: When Do I Need to Update What?
+
+| Change Made | Update Web App? | Update Frontend? |
+|-------------|-----------------|------------------|
+| Edit `mailer.gs` | ❌ No | ❌ No |
+| Edit `backend.gs` | ✅ Yes (new version) | ❌ No (URL unchanged) |
+| Edit `index.html` | ❌ No | ✅ Yes (rebuild & redeploy) |
+| New Google Form | ✅ Yes (new deployment) | ✅ Yes (new URL) |
+
+### How to Get Your Project Number
+
+If you need to find your existing Google Cloud Project Number:
+
+1. Go to [Google Cloud Console](https://console.cloud.google.com/)
+2. Make sure the correct project is selected in the dropdown at the top
+3. Click on the **3 dots** (⋮) next to your profile picture/name in the top right corner
+4. Click **Project settings** (last item in the menu)
+5. Copy the **Project number** (it's a numeric value like `123456789012`)
+
+> 💡 **Tip**: The Project Number is different from the Project ID. You need the numeric Project Number for Apps Script.
+
+---
 
 ### Part 3: Frontend Deployment to Netlify
 
