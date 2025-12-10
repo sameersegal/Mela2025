@@ -40,19 +40,7 @@
       padding: 20px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
       margin-bottom: 20px;
-      transition: max-height 0.4s ease, padding 0.4s ease, margin-bottom 0.4s ease;
-      max-height: 600px;
       overflow: hidden;
-    }
-
-    .scanner-box.compressed {
-      max-height: 100px;
-      padding: 10px 20px;
-      margin-bottom: 15px;
-    }
-
-    .scanner-box.compressed #reader {
-      height: 80px;
     }
 
     #reader {
@@ -167,21 +155,6 @@
       padding: 25px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
       margin-top: 20px;
-      transition: padding 0.4s ease, margin-top 0.4s ease;
-    }
-
-    .manual-entry.compressed {
-      padding: 15px;
-      margin-top: 10px;
-    }
-
-    .manual-entry.compressed h3 {
-      font-size: 1em;
-      margin-bottom: 10px;
-    }
-
-    .manual-entry.compressed .input-group {
-      flex-wrap: wrap;
     }
 
     .manual-entry h3 {
@@ -241,6 +214,46 @@
     .submit-btn:active {
       transform: scale(0.98);
     }
+
+    .scanner-box.hidden,
+    .manual-entry.hidden {
+      display: none;
+    }
+
+    .loading-box {
+      background: white;
+      border-radius: 15px;
+      padding: 50px 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      display: none;
+      text-align: center;
+      animation: slideIn 0.3s ease-out;
+    }
+
+    .loading-box.visible {
+      display: block;
+    }
+
+    .spinner {
+      width: 60px;
+      height: 60px;
+      border: 5px solid #e2e8f0;
+      border-top: 5px solid #667eea;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 20px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .loading-text {
+      color: #64748b;
+      font-size: 1.2em;
+      font-weight: 500;
+    }
   </style>
 </head>
 
@@ -261,6 +274,11 @@
       </div>
     </div>
 
+    <div class="loading-box" id="loadingBox">
+      <div class="spinner"></div>
+      <div class="loading-text">Verifying ticket...</div>
+    </div>
+
     <div class="result-box" id="resultBox">
       <div id="statusHeader" class="status-header"></div>
       <div id="details" class="details"></div>
@@ -272,12 +290,12 @@
   <script>
     let html5QrCode;
     // Cache DOM elements for better performance
-    let resultBox, statusHeader, details, scannerBox, manualEntry, manualInput;
+    let resultBox, statusHeader, details, scannerBox, manualEntry, manualInput, loadingBox;
 
     function showResult(resp) {
-      // Compress the scanner box and manual entry to show more details
-      scannerBox.classList.add("compressed");
-      manualEntry.classList.add("compressed");
+      // Hide loading spinner
+      loadingBox.classList.remove("visible");
+      // Show result box
       resultBox.style.display = "block";
 
       if (resp.result === "VALID") {
@@ -354,6 +372,11 @@
         html5QrCode.pause();
       }
 
+      // Hide scanner and manual entry, show loading spinner
+      scannerBox.classList.add("hidden");
+      manualEntry.classList.add("hidden");
+      loadingBox.classList.add("visible");
+
       console.log("Processing ticket:", ticketId);
       console.log("Sending to API:", API_URL);
 
@@ -390,11 +413,12 @@
 
     function resetScanner() {
       resultBox.style.display = "none";
+      loadingBox.classList.remove("visible");
       manualInput.value = "";
 
-      // Expand the scanner box and manual entry back to normal
-      scannerBox.classList.remove("compressed");
-      manualEntry.classList.remove("compressed");
+      // Show the scanner box and manual entry again
+      scannerBox.classList.remove("hidden");
+      manualEntry.classList.remove("hidden");
 
       if (html5QrCode) {
         html5QrCode.resume();
@@ -410,6 +434,7 @@
       scannerBox = document.querySelector(".scanner-box");
       manualEntry = document.querySelector(".manual-entry");
       manualInput = document.getElementById("manualInput");
+      loadingBox = document.getElementById("loadingBox");
 
       manualInput.addEventListener("keypress", function (e) {
         if (e.key === "Enter") {
