@@ -34,19 +34,27 @@ Google Form → Google Sheet → Apps Script Backend
 ```
 .
 ├── index.html          # Frontend QR scanner web app
-├── main.gs            # Apps Script - QR generation & email automation
+├── mailer.gs          # Apps Script - QR generation & email automation
 ├── backend.gs         # Apps Script - API endpoint for ticket validation
 ├── build.ps1          # PowerShell script for Netlify deployment
-└── .env               # Configuration file (API URL)
+├── mock-server.js     # Local mock server for testing (zero dependencies)
+├── config.js          # API configuration (defaults to localhost:3000)
+├── MOCK-SERVER.md     # Mock server documentation
+└── .env               # Environment variables (not committed)
 ```
 
 ## 🚀 Deployment Guide - One Time
 
 ### Prerequisites
 
+**For Production Deployment:**
 - Google Account with access to Google Sheets and Apps Script
 - Google Cloud Console project (for production use)
 - Netlify account (free tier works fine)
+
+**For Local Development:**
+- Node.js (v12 or higher) - for running the mock server
+- A modern web browser with camera support
 
 ### Part 1: Google Cloud Console Setup
 
@@ -324,6 +332,30 @@ If you need to find your existing Google Cloud Project Number:
      - Valid tickets show attendee details
      - Already used tickets show "ALREADY USED" status
      - Invalid tickets show "INVALID" status
+
+## 🧪 Local Development & Testing
+
+For local frontend development without requiring the Google Apps Script backend, use the included mock server:
+
+### Quick Start
+
+```bash
+# 1. Start the mock server
+node mock-server.js
+
+# 2. Open http://localhost:3000/ in your browser
+# The mock server serves index.html directly!
+```
+
+### Test Tickets
+
+The mock server includes pre-configured test tickets:
+
+- **Valid**: `MELA25-VALID1`, `MELA25-VALID2`, `MELA25-ABC12`, `MELA25-XYZ99`
+- **Already Used**: `MELA25-USED1`, `MELA25-USED2`, `MELA25-OLD99`
+- **Invalid**: Any other code (e.g., `MELA25-XXXXX`)
+
+For complete documentation, see [MOCK-SERVER.md](MOCK-SERVER.md).
 
 ## 🔧 Configuration
 
