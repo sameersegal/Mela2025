@@ -10,6 +10,7 @@ function doGet(e) {
 function doPost(e) {
   const data = JSON.parse(e.postData.contents);
   const ticketId = data.ticketId;
+  const peopleEntering = parseInt(data.peopleEntering) || 0; // 0 means just checking status
 
   const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Registrations");
   const values = sheet.getDataRange().getValues(); // all rows including header
@@ -22,41 +23,91 @@ function doPost(e) {
   const colNumPeople       = 5;  // E
   const colTransport       = 6;  // F
   const colTicketId        = 7;  // G  <-- assuming ticketId stored here (Mela Pass)
-  const colEntryStatus     = 8;  // H
+  const colEntryStatus     = 8;  // H  (valid/partial/used)
   const colMailerStatus    = 9;  // I
+  const colTotalEntered    = 10; // J  (running total of people entered)
+  const colEntryLog        = 11; // K  (JSON array of entry events)
 
   // iterate rows skipping header
   for (let i = 1; i < values.length; i++) {
     if (String(values[i][colTicketId - 1]) === String(ticketId)) {
-      const status = values[i][colEntryStatus - 1];
+      const numberOfPeople = parseInt(values[i][colNumPeople - 1]) || 0;
+      const currentStatus = values[i][colEntryStatus - 1] || "valid";
+      const totalEntered = parseInt(values[i][colTotalEntered - 1]) || 0;
+      
+      // Parse existing entry log or initialize empty array
+      let entryLog = [];
+      try {
+        const logValue = values[i][colEntryLog - 1];
+        if (logValue) {
+          entryLog = JSON.parse(logValue);
+        }
+      } catch (e) {
+        entryLog = [];
+      }
 
-      if (status === "used") {
-        // Return ticket details even for already used tickets, but without email
+      // If peopleEntering is 0, just return current status (no entry recorded)
+      if (peopleEntering === 0) {
+        let result = "VALID";
+        if (currentStatus === "used") {
+          result = "ALREADY_USED";
+        } else if (currentStatus === "partial") {
+          result = "PARTIAL";
+        }
+        
         return jsonWithCors({
-          result: "ALREADY_USED",
+          result: result,
           name:            values[i][colName - 1],
           iAm:             values[i][colIAm - 1],
-          numberOfPeople:  values[i][colNumPeople - 1],
+          numberOfPeople:  numberOfPeople,
           transport:       values[i][colTransport - 1],
           ticketId:        values[i][colTicketId - 1],
-          entryStatus:     "used"
+          entryStatus:     currentStatus,
+          totalEntered:    totalEntered,
+          entryLog:        entryLog
         });
       }
 
-      // mark as used
-      sheet.getRange(i + 1, colEntryStatus).setValue("used");
-      // update timestamp
-      sheet.getRange(i + 1, colTimestamp).setValue(new Date());
+      // Record the entry
+      const newTotalEntered = totalEntered + peopleEntering;
+      const timestamp = new Date();
+      
+      // Add to entry log
+      entryLog.push({
+        count: peopleEntering,
+        timestamp: timestamp.toISOString(),
+        cumulative: newTotalEntered
+      });
 
-      // return ticket info (without email for privacy)
+      // Determine new status
+      let newStatus;
+      if (newTotalEntered >= numberOfPeople) {
+        newStatus = "used";
+      } else {
+        newStatus = "partial";
+      }
+
+      // Update the sheet
+      sheet.getRange(i + 1, colEntryStatus).setValue(newStatus);
+      sheet.getRange(i + 1, colTotalEntered).setValue(newTotalEntered);
+      sheet.getRange(i + 1, colEntryLog).setValue(JSON.stringify(entryLog));
+      sheet.getRange(i + 1, colTimestamp).setValue(timestamp);
+
+      // Determine result based on whether this exceeds registration
+      let result = "VALID";
+      let isOverCapacity = newTotalEntered > numberOfPeople;
+
       return jsonWithCors({
-        result: "VALID",
+        result: result,
         name:            values[i][colName - 1],
         iAm:             values[i][colIAm - 1],
-        numberOfPeople:  values[i][colNumPeople - 1],
+        numberOfPeople:  numberOfPeople,
         transport:       values[i][colTransport - 1],
         ticketId:        values[i][colTicketId - 1],
-        entryStatus:     "used"
+        entryStatus:     newStatus,
+        totalEntered:    newTotalEntered,
+        entryLog:        entryLog,
+        isOverCapacity:  isOverCapacity
       });
     }
   }

@@ -85,6 +85,12 @@
       border: 3px solid #22c55e;
     }
 
+    .status-partial {
+      color: #3b82f6;
+      background: #eff6ff;
+      border: 3px solid #3b82f6;
+    }
+
     .status-used {
       color: #f59e0b;
       background: #fffbeb;
@@ -95,6 +101,12 @@
       color: #ef4444;
       background: #fef2f2;
       border: 3px solid #ef4444;
+    }
+
+    .status-warning {
+      color: #dc2626;
+      background: #fef2f2;
+      border: 3px solid #dc2626;
     }
 
     .details {
@@ -220,6 +232,286 @@
       display: none;
     }
 
+    /* Entry count input styles */
+    .entry-input-box {
+      background: white;
+      border-radius: 15px;
+      padding: 25px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      display: none;
+      animation: slideIn 0.3s ease-out;
+    }
+
+    .entry-input-box h3 {
+      color: #1e293b;
+      margin-bottom: 15px;
+      font-size: 1.3em;
+      text-align: center;
+    }
+
+    .ticket-summary {
+      background: #f8fafc;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 20px;
+    }
+
+    .ticket-summary .name {
+      font-size: 1.2em;
+      font-weight: 600;
+      color: #1e293b;
+    }
+
+    .ticket-summary .info {
+      color: #64748b;
+      font-size: 0.95em;
+      margin-top: 5px;
+    }
+
+    .entry-status-banner {
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    .entry-status-banner.partial {
+      background: #dbeafe;
+      color: #1d4ed8;
+    }
+
+    .entry-status-banner.used {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .people-input-group {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      margin: 20px 0;
+    }
+
+    .people-input-group label {
+      font-weight: 600;
+      color: #1e293b;
+      font-size: 1.1em;
+    }
+
+    #peopleEnteringInput {
+      width: 80px;
+      padding: 12px;
+      border: 2px solid #e2e8f0;
+      border-radius: 8px;
+      font-size: 1.3em;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    #peopleEnteringInput:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    /* Quick select buttons for people count */
+    .quick-select-section {
+      margin: 20px 0;
+    }
+
+    .quick-select-label {
+      text-align: center;
+      font-weight: 600;
+      color: #1e293b;
+      font-size: 1.1em;
+      margin-bottom: 12px;
+    }
+
+    .quick-select-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .quick-btn {
+      min-width: 60px;
+      padding: 15px 20px;
+      background: #f1f5f9;
+      color: #1e293b;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      font-size: 1.3em;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .quick-btn:hover {
+      background: #e2e8f0;
+      border-color: #667eea;
+    }
+
+    .quick-btn:active {
+      transform: scale(0.95);
+    }
+
+    .quick-btn.selected {
+      background: #667eea;
+      color: white;
+      border-color: #667eea;
+    }
+
+    .quick-btn.other-btn {
+      background: #fef3c7;
+      border-color: #f59e0b;
+      color: #92400e;
+      font-size: 1em;
+    }
+
+    .quick-btn.other-btn:hover {
+      background: #fde68a;
+    }
+
+    .quick-btn.other-btn.selected {
+      background: #f59e0b;
+      color: white;
+    }
+
+    .other-input-group {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 15px;
+      padding: 15px;
+      background: #fef3c7;
+      border-radius: 10px;
+    }
+
+    .other-input-group.visible {
+      display: flex;
+    }
+
+    .other-input-group label {
+      font-weight: 600;
+      color: #92400e;
+    }
+
+    .other-input-group input {
+      width: 80px;
+      padding: 10px;
+      border: 2px solid #f59e0b;
+      border-radius: 8px;
+      font-size: 1.2em;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    .other-input-group input:focus {
+      outline: none;
+      border-color: #d97706;
+    }
+
+    .capacity-info {
+      text-align: center;
+      color: #64748b;
+      font-size: 0.95em;
+      margin-bottom: 15px;
+    }
+
+    .capacity-info .remaining {
+      font-weight: 600;
+      color: #22c55e;
+    }
+
+    .capacity-info .over {
+      font-weight: 600;
+      color: #dc2626;
+    }
+
+    .warning-box {
+      background: #fef2f2;
+      border: 2px solid #fecaca;
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 15px;
+      color: #991b1b;
+      text-align: center;
+      display: none;
+    }
+
+    .entry-buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .confirm-btn {
+      flex: 1;
+      padding: 15px;
+      background: #22c55e;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 1.1em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .confirm-btn:hover {
+      background: #16a34a;
+    }
+
+    .confirm-btn:disabled {
+      background: #9ca3af;
+      cursor: not-allowed;
+    }
+
+    .cancel-btn {
+      flex: 1;
+      padding: 15px;
+      background: #64748b;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 1.1em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .cancel-btn:hover {
+      background: #475569;
+    }
+
+    /* Entry log styles */
+    .entry-log {
+      margin-top: 15px;
+      background: #f1f5f9;
+      border-radius: 8px;
+      padding: 12px;
+    }
+
+    .entry-log h4 {
+      color: #64748b;
+      font-size: 0.9em;
+      margin-bottom: 8px;
+    }
+
+    .entry-log-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 0;
+      border-bottom: 1px solid #e2e8f0;
+      font-size: 0.9em;
+    }
+
+    .entry-log-item:last-child {
+      border-bottom: none;
+    }
+
     .loading-box {
       background: white;
       border-radius: 15px;
@@ -245,8 +537,13 @@
     }
 
     @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
     }
 
     .loading-text {
@@ -269,7 +566,8 @@
       <h3>📝 Manual Entry</h3>
       <div class="input-group">
         <span class="prefix">MELA25-</span>
-        <input type="text" id="manualInput" placeholder="Enter code (e.g., QZ0R0)" maxlength="10" autocapitalize="characters" style="text-transform: uppercase;" />
+        <input type="text" id="manualInput" placeholder="Enter code (e.g., QZ0R0)" maxlength="10"
+          autocapitalize="characters" style="text-transform: uppercase;" />
         <button class="submit-btn" onclick="submitManual()">Check</button>
       </div>
     </div>
@@ -277,6 +575,28 @@
     <div class="loading-box" id="loadingBox">
       <div class="spinner"></div>
       <div class="loading-text">Verifying ticket...</div>
+    </div>
+
+    <div class="entry-input-box" id="entryInputBox">
+      <h3>👥 How many people entering?</h3>
+      <div class="ticket-summary" id="ticketSummary"></div>
+      <div class="entry-status-banner" id="entryStatusBanner"></div>
+      <div class="quick-select-section">
+        <div class="quick-select-label">Select number of people:</div>
+        <div class="quick-select-buttons" id="quickSelectButtons"></div>
+        <div class="other-input-group" id="otherInputGroup">
+          <label for="otherPeopleInput">Enter count:</label>
+          <input type="number" id="otherPeopleInput" min="1" value="1" />
+        </div>
+      </div>
+      <input type="hidden" id="peopleEnteringInput" value="1" />
+      <div class="capacity-info" id="capacityInfo"></div>
+      <div class="warning-box" id="warningBox">⚠️ This exceeds the registered count!</div>
+      <div class="entry-log" id="entryLogPreview" style="display: none;"></div>
+      <div class="entry-buttons">
+        <button class="cancel-btn" onclick="cancelEntry()">Cancel</button>
+        <button class="confirm-btn" id="confirmBtn" onclick="confirmEntry()">Confirm Entry</button>
+      </div>
     </div>
 
     <div class="result-box" id="resultBox">
@@ -291,45 +611,232 @@
     let html5QrCode;
     // Cache DOM elements for better performance
     let resultBox, statusHeader, details, scannerBox, manualEntry, manualInput, loadingBox;
+    let entryInputBox, ticketSummary, entryStatusBanner, peopleEnteringInput, capacityInfo, warningBox, entryLogPreview, confirmBtn;
+    let quickSelectButtons, otherInputGroup, otherPeopleInput;
 
-    function showResult(resp) {
+    // Current ticket data (stored after initial scan)
+    let currentTicket = null;
+    let selectedCount = 0;
+
+    function generateQuickSelectButtons(numberOfPeople, remaining) {
+      quickSelectButtons.innerHTML = '';
+
+      // Create buttons for 1 to numberOfPeople
+      for (let i = 1; i <= numberOfPeople; i++) {
+        const btn = document.createElement('button');
+        btn.className = 'quick-btn';
+        btn.textContent = i;
+        btn.onclick = () => selectPeopleCount(i);
+
+        // Pre-select the remaining count or numberOfPeople if no one has entered
+        if (i === remaining || (remaining <= 0 && i === numberOfPeople)) {
+          btn.classList.add('selected');
+          selectedCount = i;
+          peopleEnteringInput.value = i;
+        }
+
+        quickSelectButtons.appendChild(btn);
+      }
+
+      // Add "Other" button
+      const otherBtn = document.createElement('button');
+      otherBtn.className = 'quick-btn other-btn';
+      otherBtn.textContent = 'Other';
+      otherBtn.id = 'otherBtn';
+      otherBtn.onclick = () => selectOther();
+      quickSelectButtons.appendChild(otherBtn);
+
+      // Hide other input by default
+      otherInputGroup.classList.remove('visible');
+    }
+
+    function selectPeopleCount(count) {
+      selectedCount = count;
+      peopleEnteringInput.value = count;
+
+      // Update button states
+      document.querySelectorAll('.quick-btn').forEach(btn => {
+        btn.classList.remove('selected');
+      });
+      event.target.classList.add('selected');
+
+      // Hide other input
+      otherInputGroup.classList.remove('visible');
+
+      updateCapacityInfo();
+    }
+
+    function selectOther() {
+      // Update button states
+      document.querySelectorAll('.quick-btn').forEach(btn => {
+        btn.classList.remove('selected');
+      });
+      document.getElementById('otherBtn').classList.add('selected');
+
+      // Show other input
+      otherInputGroup.classList.add('visible');
+      otherPeopleInput.focus();
+      otherPeopleInput.select();
+
+      // Use the value from the other input
+      const otherValue = parseInt(otherPeopleInput.value) || 1;
+      selectedCount = otherValue;
+      peopleEnteringInput.value = otherValue;
+
+      updateCapacityInfo();
+    }
+
+    function updateOtherInput() {
+      const value = parseInt(otherPeopleInput.value) || 1;
+      selectedCount = value;
+      peopleEnteringInput.value = value;
+      updateCapacityInfo();
+    }
+
+    function showEntryInput(resp) {
+      // Hide loading spinner
+      loadingBox.classList.remove("visible");
+
+      // Store ticket data
+      currentTicket = resp;
+
+      // Show entry input box
+      entryInputBox.style.display = "block";
+
+      // Populate ticket summary
+      ticketSummary.innerHTML = `
+        <div class="name">${resp.name}</div>
+        <div class="info">${resp.iAm} • ${resp.transport} • Ticket: ${resp.ticketId}</div>
+      `;
+
+      const totalEntered = resp.totalEntered || 0;
+      const numberOfPeople = resp.numberOfPeople;
+      const remaining = numberOfPeople - totalEntered;
+
+      // Show status banner for partial/used tickets
+      if (resp.entryStatus === 'partial') {
+        entryStatusBanner.style.display = 'block';
+        entryStatusBanner.className = 'entry-status-banner partial';
+        entryStatusBanner.innerHTML = `📋 Partial Entry: ${totalEntered} of ${numberOfPeople} already entered`;
+      } else if (resp.entryStatus === 'used') {
+        entryStatusBanner.style.display = 'block';
+        entryStatusBanner.className = 'entry-status-banner used';
+        entryStatusBanner.innerHTML = `⚠️ Fully Used: All ${numberOfPeople} registered have entered`;
+      } else {
+        entryStatusBanner.style.display = 'none';
+      }
+
+      // Generate quick select buttons
+      generateQuickSelectButtons(numberOfPeople, remaining);
+
+      // Set default value
+      const defaultPeople = Math.max(1, remaining > 0 ? remaining : numberOfPeople);
+      peopleEnteringInput.value = defaultPeople;
+      selectedCount = defaultPeople;
+
+      updateCapacityInfo();
+
+      // Show entry log if there are previous entries
+      if (resp.entryLog && resp.entryLog.length > 0) {
+        entryLogPreview.style.display = 'block';
+        entryLogPreview.innerHTML = `
+          <h4>📜 Entry History</h4>
+          ${resp.entryLog.map(entry => `
+            <div class="entry-log-item">
+              <span>${entry.count} person${entry.count > 1 ? 's' : ''}</span>
+              <span>${new Date(entry.timestamp).toLocaleTimeString()}</span>
+            </div>
+          `).join('')}
+        `;
+      } else {
+        entryLogPreview.style.display = 'none';
+      }
+    }
+
+    function updateCapacityInfo() {
+      if (!currentTicket) return;
+
+      const entering = parseInt(peopleEnteringInput.value) || 0;
+      const totalEntered = currentTicket.totalEntered || 0;
+      const numberOfPeople = currentTicket.numberOfPeople;
+      const newTotal = totalEntered + entering;
+      const remaining = numberOfPeople - totalEntered;
+
+      if (remaining > 0) {
+        capacityInfo.innerHTML = `Registered: <strong>${numberOfPeople}</strong> | Already entered: <strong>${totalEntered}</strong> | Remaining: <span class="remaining">${remaining}</span>`;
+      } else {
+        capacityInfo.innerHTML = `Registered: <strong>${numberOfPeople}</strong> | Already entered: <strong>${totalEntered}</strong> | <span class="over">Over capacity by ${totalEntered - numberOfPeople}</span>`;
+      }
+
+      // Show warning if exceeding capacity
+      if (newTotal > numberOfPeople) {
+        warningBox.style.display = 'block';
+        warningBox.innerHTML = `⚠️ Warning: Entering ${entering} will exceed registration by ${newTotal - numberOfPeople}`;
+        confirmBtn.textContent = 'Confirm Anyway';
+      } else {
+        warningBox.style.display = 'none';
+        confirmBtn.textContent = 'Confirm Entry';
+      }
+
+      // Disable if invalid
+      confirmBtn.disabled = entering < 1;
+    }
+
+    function confirmEntry() {
+      const peopleEntering = parseInt(peopleEnteringInput.value) || 0;
+      if (peopleEntering < 1 || !currentTicket) return;
+
+      // Hide entry input, show loading
+      entryInputBox.style.display = 'none';
+      loadingBox.classList.add("visible");
+
+      // Send entry confirmation
+      fetch(API_URL, {
+        method: "POST",
+        body: JSON.stringify({
+          ticketId: currentTicket.ticketId,
+          peopleEntering: peopleEntering
+        })
+      })
+        .then(r => r.json())
+        .then(resp => {
+          console.log("Entry confirmed:", resp);
+          showResult(resp, peopleEntering);
+        })
+        .catch(err => {
+          console.error("Error:", err);
+          showResult({ result: "ERROR" }, 0);
+        });
+    }
+
+    function cancelEntry() {
+      currentTicket = null;
+      entryInputBox.style.display = 'none';
+      resetScanner();
+    }
+
+    function showResult(resp, peopleEntered = 0) {
       // Hide loading spinner
       loadingBox.classList.remove("visible");
       // Show result box
       resultBox.style.display = "block";
 
+      const totalEntered = resp.totalEntered || 0;
+      const numberOfPeople = resp.numberOfPeople || 0;
+
       if (resp.result === "VALID") {
-        statusHeader.className = "status-header status-valid";
-        statusHeader.innerHTML = "✓ VALID TICKET";
+        // Check if over capacity
+        if (resp.isOverCapacity) {
+          statusHeader.className = "status-header status-warning";
+          statusHeader.innerHTML = "⚠ ENTRY RECORDED (OVER CAPACITY)";
+        } else {
+          statusHeader.className = "status-header status-valid";
+          statusHeader.innerHTML = "✓ ENTRY RECORDED";
+        }
 
         details.innerHTML = `
-          <div class="detail-row">
-            <span class="detail-label">Name</span>
-            <span class="detail-value">${resp.name}</span>
-          </div>
-          <div class="detail-row">
-            <span class="detail-label">Type</span>
-            <span class="detail-value">${resp.iAm}</span>
-          </div>
-          <div class="detail-row">
-            <span class="detail-label">Number of People</span>
-            <span class="detail-value">${resp.numberOfPeople}</span>
-          </div>
-          <div class="detail-row">
-            <span class="detail-label">Transport</span>
-            <span class="detail-value">${resp.transport}</span>
-          </div>
-          <div class="detail-row">
-            <span class="detail-label">Ticket ID</span>
-            <span class="detail-value">${resp.ticketId}</span>
-          </div>
-        `;
-      } else if (resp.result === "ALREADY_USED") {
-        statusHeader.className = "status-header status-used";
-        statusHeader.innerHTML = "⚠ ALREADY USED";
-        details.innerHTML = `
-          <div style="text-align: center; color: #92400e; font-size: 1.1em; padding: 20px; margin-bottom: 15px;">
-            This ticket has already been scanned and cannot be used again.
+          <div style="text-align: center; color: #166534; font-size: 1.2em; padding: 15px; margin-bottom: 15px; background: #dcfce7; border-radius: 8px;">
+            ✓ ${peopleEntered} person${peopleEntered > 1 ? 's' : ''} entered successfully
           </div>
           <div class="detail-row">
             <span class="detail-label">Name</span>
@@ -340,8 +847,8 @@
             <span class="detail-value">${resp.iAm}</span>
           </div>
           <div class="detail-row">
-            <span class="detail-label">Number of People</span>
-            <span class="detail-value">${resp.numberOfPeople}</span>
+            <span class="detail-label">Entry Progress</span>
+            <span class="detail-value" style="color: ${totalEntered > numberOfPeople ? '#dc2626' : '#22c55e'};">${totalEntered} / ${numberOfPeople} ${totalEntered > numberOfPeople ? '(OVER)' : ''}</span>
           </div>
           <div class="detail-row">
             <span class="detail-label">Transport</span>
@@ -351,13 +858,32 @@
             <span class="detail-label">Ticket ID</span>
             <span class="detail-value">${resp.ticketId}</span>
           </div>
+          ${resp.entryLog && resp.entryLog.length > 0 ? `
+          <div class="entry-log">
+            <h4>📜 Entry History</h4>
+            ${resp.entryLog.map(entry => `
+              <div class="entry-log-item">
+                <span>${entry.count} person${entry.count > 1 ? 's' : ''}</span>
+                <span>${new Date(entry.timestamp).toLocaleTimeString()}</span>
+              </div>
+            `).join('')}
+          </div>
+          ` : ''}
         `;
-      } else {
+      } else if (resp.result === "INVALID") {
         statusHeader.className = "status-header status-invalid";
         statusHeader.innerHTML = "✖ INVALID TICKET";
         details.innerHTML = `
           <div style="text-align: center; color: #991b1b; font-size: 1.1em; padding: 20px;">
             This ticket was not found in the system.
+          </div>
+        `;
+      } else {
+        statusHeader.className = "status-header status-invalid";
+        statusHeader.innerHTML = "✖ ERROR";
+        details.innerHTML = `
+          <div style="text-align: center; color: #991b1b; font-size: 1.1em; padding: 20px;">
+            An error occurred. Please try again.
           </div>
         `;
       }
@@ -380,11 +906,10 @@
       console.log("Processing ticket:", ticketId);
       console.log("Sending to API:", API_URL);
 
-      // Note: Don't set Content-Type header to avoid CORS preflight request
-      // Google Apps Script will still parse the JSON body correctly
+      // First, check ticket status (peopleEntering = 0)
       fetch(API_URL, {
         method: "POST",
-        body: JSON.stringify({ ticketId: ticketId })
+        body: JSON.stringify({ ticketId: ticketId, peopleEntering: 0 })
       })
         .then(r => {
           console.log("Response status:", r.status);
@@ -392,11 +917,16 @@
         })
         .then(resp => {
           console.log("Response data:", resp);
-          showResult(resp);
+          if (resp.result === "INVALID") {
+            showResult(resp, 0);
+          } else {
+            // Valid, partial, or used - show entry input
+            showEntryInput(resp);
+          }
         })
         .catch(err => {
           console.error("Error:", err);
-          showResult({ result: "ERROR" });
+          showResult({ result: "ERROR" }, 0);
         });
     }
 
@@ -413,8 +943,10 @@
 
     function resetScanner() {
       resultBox.style.display = "none";
+      entryInputBox.style.display = "none";
       loadingBox.classList.remove("visible");
       manualInput.value = "";
+      currentTicket = null;
 
       // Show the scanner box and manual entry again
       scannerBox.classList.remove("hidden");
@@ -435,10 +967,28 @@
       manualEntry = document.querySelector(".manual-entry");
       manualInput = document.getElementById("manualInput");
       loadingBox = document.getElementById("loadingBox");
+      entryInputBox = document.getElementById("entryInputBox");
+      ticketSummary = document.getElementById("ticketSummary");
+      entryStatusBanner = document.getElementById("entryStatusBanner");
+      peopleEnteringInput = document.getElementById("peopleEnteringInput");
+      capacityInfo = document.getElementById("capacityInfo");
+      warningBox = document.getElementById("warningBox");
+      entryLogPreview = document.getElementById("entryLogPreview");
+      confirmBtn = document.getElementById("confirmBtn");
+      quickSelectButtons = document.getElementById("quickSelectButtons");
+      otherInputGroup = document.getElementById("otherInputGroup");
+      otherPeopleInput = document.getElementById("otherPeopleInput");
 
       manualInput.addEventListener("keypress", function (e) {
         if (e.key === "Enter") {
           submitManual();
+        }
+      });
+
+      otherPeopleInput.addEventListener("input", updateOtherInput);
+      otherPeopleInput.addEventListener("keypress", function (e) {
+        if (e.key === "Enter") {
+          confirmEntry();
         }
       });
     });
