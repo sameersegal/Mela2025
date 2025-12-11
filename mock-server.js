@@ -62,7 +62,7 @@ const MOCK_TICKETS = {
     ticketId: 'MELA25-XYZ99',
     entryStatus: 'valid'
   },
-  
+
   // Already used tickets - include full details
   'MELA25-USED1': {
     result: 'ALREADY_USED',
@@ -104,48 +104,51 @@ const scannedTickets = new Set();
  */
 function handleTicketValidation(req, res) {
   let body = '';
-  
+
   req.on('data', chunk => {
     body += chunk.toString();
   });
-  
+
   req.on('end', () => {
     try {
       const data = JSON.parse(body);
       const ticketId = data.ticketId;
-      
+
       console.log(`[${new Date().toISOString()}] Validating ticket: ${ticketId}`);
-      
+
       // Check if ticket exists in mock data
       if (MOCK_TICKETS[ticketId]) {
         const ticket = MOCK_TICKETS[ticketId];
-        
+
         // If ticket is already marked as ALREADY_USED in mock data
         if (ticket.result === 'ALREADY_USED') {
           console.log(`  → Result: ALREADY_USED (pre-configured)`);
-          sendResponse(res, 200, ticket);
+          const { email, ...ticketWithoutEmail } = ticket;
+          sendResponse(res, 200, ticketWithoutEmail);
           return;
         }
-        
+
         // If ticket was scanned in this session
         if (scannedTickets.has(ticketId)) {
           console.log(`  → Result: ALREADY_USED (scanned in session)`);
-          // Return full ticket details with ALREADY_USED status
-          sendResponse(res, 200, { ...ticket, result: 'ALREADY_USED' });
+          // Return full ticket details with ALREADY_USED status (without email for privacy)
+          const { email, ...ticketWithoutEmail } = ticket;
+          sendResponse(res, 200, { ...ticketWithoutEmail, result: 'ALREADY_USED' });
           return;
         }
-        
-        // Valid ticket - mark as scanned and return details
+
+        // Valid ticket - mark as scanned and return details (without email for privacy)
         scannedTickets.add(ticketId);
         console.log(`  → Result: VALID`);
-        sendResponse(res, 200, ticket);
+        const { email, ...ticketWithoutEmail } = ticket;
+        sendResponse(res, 200, ticketWithoutEmail);
         return;
       }
-      
+
       // Ticket not found - invalid
       console.log(`  → Result: INVALID`);
       sendResponse(res, 200, { result: 'INVALID' });
-      
+
     } catch (error) {
       console.error(`Error parsing request: ${error.message}`);
       sendResponse(res, 400, { result: 'ERROR', message: 'Invalid request format' });
@@ -171,19 +174,19 @@ function sendResponse(res, statusCode, data) {
  */
 const server = http.createServer((req, res) => {
   const parsedUrl = url.parse(req.url, true);
-  
+
   // Handle OPTIONS request for CORS preflight
   if (req.method === 'OPTIONS') {
     sendResponse(res, 200, {});
     return;
   }
-  
+
   // Handle POST request for ticket validation
   if (req.method === 'POST' && parsedUrl.pathname === '/') {
     handleTicketValidation(req, res);
     return;
   }
-  
+
   // Handle GET request for root - serve index.html
   if (req.method === 'GET' && parsedUrl.pathname === '/') {
     const indexPath = path.join(__dirname, 'index.html');
@@ -199,7 +202,7 @@ const server = http.createServer((req, res) => {
     });
     return;
   }
-  
+
   // Handle GET request for config.js
   if (req.method === 'GET' && parsedUrl.pathname === '/config.js') {
     const configPath = path.join(__dirname, 'config.js');
@@ -215,7 +218,7 @@ const server = http.createServer((req, res) => {
     });
     return;
   }
-  
+
   // 404 for other paths
   res.writeHead(404, { 'Content-Type': 'text/plain' });
   res.end('Not Found');

@@ -1,0 +1,26 @@
+{
+  "name": "mela2025",
+  "version": "1.0.0",
+  "description": "A QR code-based entry pass system for Mela 2025 attendees. This system allows users to register via Google Forms, automatically receive a QR code entry pass via email, and enables event staff to scan and validate passes at the venue.",
+  "main": "mock-server.js",
+  "scripts": {
+    "start": "node mock-server.js",
+    "dev": "nodemon mock-server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sameersegal/mela2025.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/sameersegal/mela2025/issues"
+  },
+  "homepage": "https://github.com/sameersegal/mela2025#readme",
+  "devDependencies": {
+    "nodemon": "^3.1.11"
+  }
+}

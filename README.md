@@ -33,14 +33,16 @@ Google Form → Google Sheet → Apps Script Backend
 
 ```
 .
-├── index.html          # Frontend QR scanner web app
-├── mailer.gs          # Apps Script - QR generation & email automation
-├── backend.gs         # Apps Script - API endpoint for ticket validation
-├── build.ps1          # PowerShell script for Netlify deployment
-├── mock-server.js     # Local mock server for testing (zero dependencies)
-├── config.js          # API configuration (defaults to localhost:3000)
-├── MOCK-SERVER.md     # Mock server documentation
-└── .env               # Environment variables (not committed)
+├── index.html              # Frontend QR scanner web app
+├── config.js               # API configuration (defaults to localhost:3000)
+├── mock-server.js          # Local mock server for testing (zero dependencies)
+├── build.ps1               # PowerShell script for Netlify deployment
+├── MOCK-SERVER.md          # Mock server documentation
+├── package.json            # Node.js dependencies (nodemon for dev server)
+├── copy_to_sheets/         # Google Apps Script files (copy to Google Sheets)
+│   ├── mailer.gs           # Apps Script - QR generation & email automation
+│   └── backend.gs          # Apps Script - API endpoint for ticket validation
+└── .env                    # Environment variables (not committed)
 ```
 
 ## 🚀 Deployment Guide - One Time
@@ -124,10 +126,10 @@ This step is required for deploying the Apps Script as a web app that can be acc
    - Create two script files:
      
      **File 1: mailer.gs**
-     - Copy the contents of `mailer.gs` from this repository
+     - Copy the contents of `copy_to_sheets/mailer.gs` from this repository
      
      **File 2: backend.gs**
-     - Copy the contents of `backend.gs` from this repository
+     - Copy the contents of `copy_to_sheets/backend.gs` from this repository
 
 4. **Link to Google Cloud Project**
    - In the Apps Script editor, click on the project settings (gear icon)
