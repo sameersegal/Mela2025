@@ -1,3 +1,12 @@
+// Handle GET requests (for CORS preflight and testing)
+function doGet(e) {
+  // If ticketId is passed as query parameter, process it (read-only check)
+  if (e && e.parameter && e.parameter.ticketId) {
+    return checkTicket(e.parameter.ticketId, false); // false = don't mark as used
+  }
+  return jsonResponse({ result: "OK", message: "Service is running" });
+}
+
 function doPost(e) {
   const data = JSON.parse(e.postData.contents);
   const ticketId = data.ticketId;
@@ -22,7 +31,16 @@ function doPost(e) {
       const status = values[i][colEntryStatus - 1];
 
       if (status === "used") {
-        return jsonWithCors({ result: "ALREADY_USED" });
+        // Return ticket details even for already used tickets, but without email
+        return jsonWithCors({
+          result: "ALREADY_USED",
+          name:            values[i][colName - 1],
+          iAm:             values[i][colIAm - 1],
+          numberOfPeople:  values[i][colNumPeople - 1],
+          transport:       values[i][colTransport - 1],
+          ticketId:        values[i][colTicketId - 1],
+          entryStatus:     "used"
+        });
       }
 
       // mark as used
@@ -30,17 +48,15 @@ function doPost(e) {
       // update timestamp
       sheet.getRange(i + 1, colTimestamp).setValue(new Date());
 
-      // return ticket info
+      // return ticket info (without email for privacy)
       return jsonWithCors({
         result: "VALID",
         name:            values[i][colName - 1],
-        email:           values[i][colEmail - 1],
         iAm:             values[i][colIAm - 1],
         numberOfPeople:  values[i][colNumPeople - 1],
         transport:       values[i][colTransport - 1],
         ticketId:        values[i][colTicketId - 1],
-        entryStatus:     "used",
-        mailerStatus:    values[i][colMailerStatus - 1]
+        entryStatus:     "used"
       });
     }
   }
@@ -48,8 +64,13 @@ function doPost(e) {
   return jsonWithCors({ result: "INVALID" });
 }
 
-function jsonWithCors(obj) {
+function jsonResponse(obj) {
   return ContentService
     .createTextOutput(JSON.stringify(obj))
     .setMimeType(ContentService.MimeType.JSON);
+}
+
+// Alias for backward compatibility
+function jsonWithCors(obj) {
+  return jsonResponse(obj);
 }

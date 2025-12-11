@@ -43,31 +43,7 @@ Google Form → Google Sheet → Apps Script Backend
 └── .env               # Environment variables (not committed)
 ```
 
-## 🧪 Local Development & Testing
-
-For local frontend development without requiring the Google Apps Script backend, use the included mock server:
-
-### Quick Start
-
-```bash
-# 1. Start the mock server
-node mock-server.js
-
-# 2. Open http://localhost:3000/ in your browser
-# The mock server serves index.html directly!
-```
-
-### Test Tickets
-
-The mock server includes pre-configured test tickets:
-
-- **Valid**: `MELA25-VALID1`, `MELA25-VALID2`, `MELA25-ABC12`, `MELA25-XYZ99`
-- **Already Used**: `MELA25-USED1`, `MELA25-USED2`, `MELA25-OLD99`
-- **Invalid**: Any other code (e.g., `MELA25-XXXXX`)
-
-For complete documentation, see [MOCK-SERVER.md](MOCK-SERVER.md).
-
-## 🚀 Production Deployment Guide
+## 🚀 Deployment Guide - One Time
 
 ### Prerequisites
 
@@ -87,14 +63,12 @@ This step is required for deploying the Apps Script as a web app that can be acc
 1. **Create a Google Cloud Project**
    - Go to [Google Cloud Console](https://console.cloud.google.com/)
    - Create a new project or select an existing one
-   - Note your Project Number (you'll need this later)
 
 2. **Enable Required APIs**
    - In the Cloud Console, navigate to "APIs & Services" > "Library"
    - Enable the following APIs:
      - Google Sheets API
-     - Gmail API (for sending emails)
-     - Google Apps Script API
+     - Google Drive API
 
 3. **Configure OAuth Consent Screen** (For Personal Use)
    - Navigate to "APIs & Services" > "OAuth consent screen"
@@ -103,11 +77,21 @@ This step is required for deploying the Apps Script as a web app that can be acc
      - App name: "Mela 2025 Entry System"
      - User support email: Your email
      - Developer contact: Your email
+   - Once create, again navigate to "APIs & Services" > "OAuth consent screen"
+   - Select "Data Access" on the left side menu
    - Add scopes:
      - `https://www.googleapis.com/auth/spreadsheets`
-     - `https://www.googleapis.com/auth/gmail.send`
+     - `https://www.googleapis.com/auth/drive`
+   - Once create, again navigate to "APIs & Services" > "OAuth consent screen"
+   - Select "Audience" on the left side menu
    - Add test users (your Google account email)
    - Save and continue
+
+  4. **Get Project Number**
+    - In the Cloud Console, ensure the right project is selected
+    - Click on the 3 dots next to your name / photo on the top right of the screen
+    - Click on Project Settings (last item in the menu)
+    - Copy the project number
 
 ### Part 2: Google Sheets & Apps Script Setup
 
@@ -139,8 +123,8 @@ This step is required for deploying the Apps Script as a web app that can be acc
    - Delete any default code
    - Create two script files:
      
-     **File 1: main.gs**
-     - Copy the contents of `main.gs` from this repository
+     **File 1: mailer.gs**
+     - Copy the contents of `mailer.gs` from this repository
      
      **File 2: backend.gs**
      - Copy the contents of `backend.gs` from this repository
@@ -163,7 +147,7 @@ This step is required for deploying the Apps Script as a web app that can be acc
 
 6. **Deploy as Web App**
    - Click on "Deploy" > "New deployment"
-   - Click on "Select type" > "Web app"
+   - Click on "Select type" > "Web app" (Gear icon)
    - Configure:
      - Description: "Mela 2025 Backend API"
      - Execute as: "Me"
@@ -178,6 +162,120 @@ This step is required for deploying the Apps Script as a web app that can be acc
      - A unique ID appears in column G (Mela Pass)
      - Status in column I shows "SENT"
      - You received an email with the QR code
+
+---
+
+## 🔄 Recurring Deployments (Updating an Existing Setup)
+
+If you already have a Google Cloud Project set up from a previous event and want to reuse it, follow these simpler steps.
+
+### Scenario A: Updating Scripts in an Existing Form
+
+#### Updating `mailer.gs` (Email/QR Code Generation)
+
+**No additional steps required!** 🎉
+
+1. Open your Google Sheet
+2. Go to **Extensions > Apps Script**
+3. Open the `mailer.gs` file
+4. Replace the code with the updated version
+5. Click **Save** (💾 icon or Ctrl+S)
+6. That's it! The trigger will automatically use the new code
+
+#### Updating `backend.gs` (Ticket Validation API)
+
+**You need to create a new Web App deployment:**
+
+1. Open your Google Sheet
+2. Go to **Extensions > Apps Script**
+3. Open the `backend.gs` file
+4. Replace the code with the updated version
+5. Click **Save** (💾 icon or Ctrl+S)
+6. Click **Deploy** > **Manage deployments**
+7. Click the **pencil icon** (✏️) to edit the existing deployment
+8. Under "Version", select **New version**
+9. Click **Deploy**
+10. **Important**: The URL stays the same, so no changes needed on the frontend!
+
+> ⚠️ **Note**: If you create a "New deployment" instead of editing the existing one, you'll get a new URL and will need to update your `.env` file and redeploy the frontend.
+
+### Scenario B: Creating a New Form (New Event/Year)
+
+If you're setting up a completely new Google Form (e.g., for a new year's event), follow these steps:
+
+1. **Create the New Google Form**
+   - Create a new Google Form with the required fields (see Part 2, Step 1 in the One-Time Setup)
+   - Link it to a new Google Sheet
+
+2. **Prepare the Google Sheet**
+   - Rename the responses sheet to "Registrations"
+   - Ensure columns match the expected structure (see Part 2, Step 2)
+
+3. **Add the Scripts**
+   - Go to **Extensions > Apps Script**
+   - Create `mailer.gs` and paste the code
+   - Create `backend.gs` and paste the code
+   - Click **Save**
+
+4. **Link to Your Existing Google Cloud Project**
+   - In Apps Script editor, click the **gear icon** (Project Settings)
+   - Under "Google Cloud Platform (GCP) Project", click **Change project**
+   - Enter your **existing** GCP Project Number (see [How to Get Your Project Number](#how-to-get-your-project-number) below)
+   - Click **Set project**
+
+5. **Set Up the Form Submit Trigger**
+   - Click the **clock icon** (Triggers) in the sidebar
+   - Click **+ Add Trigger**
+   - Configure:
+     - Function: `generateQRCodeAndEmail`
+     - Event source: `From spreadsheet`
+     - Event type: `On form submit`
+   - Click **Save** and grant permissions
+
+6. **Deploy as Web App**
+   - Click **Deploy** > **New deployment**
+   - Select type: **Web app**
+   - Configure:
+     - Execute as: "Me"
+     - Who has access: "Anyone"
+   - Click **Deploy**
+   - **Copy the new Web App URL**
+
+7. **Update the Frontend**
+   - Update your `.env` file with the new API URL:
+     ```env
+     API_URL=https://script.google.com/macros/s/NEW_DEPLOYMENT_ID/exec
+     ```
+   - Run `.\build.ps1` to create a new zip
+   - Redeploy to Netlify (drag & drop the new zip)
+
+8. **Test Everything**
+   - Submit a test form entry
+   - Verify email is received with QR code
+   - Test scanning on the frontend
+
+### Quick Reference: When Do I Need to Update What?
+
+| Change Made | Update Web App? | Update Frontend? |
+|-------------|-----------------|------------------|
+| Edit `mailer.gs` | ❌ No | ❌ No |
+| Edit `backend.gs` | ✅ Yes (new version) | ❌ No (URL unchanged) |
+| Edit `index.html` | ❌ No | ✅ Yes (rebuild & redeploy) |
+| New Google Form | ✅ Yes (new deployment) | ✅ Yes (new URL) |
+
+### How to Get Your Project Number
+
+If you need to find your existing Google Cloud Project Number:
+
+1. Go to [Google Cloud Console](https://console.cloud.google.com/)
+2. Make sure the correct project is selected in the dropdown at the top
+3. Click on the **3 dots** (⋮) next to your profile picture/name in the top right corner
+4. Click **Project settings** (last item in the menu)
+5. Copy the **Project number** (it's a numeric value like `123456789012`)
+
+> 💡 **Tip**: The Project Number is different from the Project ID. You need the numeric Project Number for Apps Script.
+
+---
 
 ### Part 3: Frontend Deployment to Netlify
 
@@ -234,6 +332,30 @@ This step is required for deploying the Apps Script as a web app that can be acc
      - Valid tickets show attendee details
      - Already used tickets show "ALREADY USED" status
      - Invalid tickets show "INVALID" status
+
+## 🧪 Local Development & Testing
+
+For local frontend development without requiring the Google Apps Script backend, use the included mock server:
+
+### Quick Start
+
+```bash
+# 1. Start the mock server
+node mock-server.js
+
+# 2. Open http://localhost:3000/ in your browser
+# The mock server serves index.html directly!
+```
+
+### Test Tickets
+
+The mock server includes pre-configured test tickets:
+
+- **Valid**: `MELA25-VALID1`, `MELA25-VALID2`, `MELA25-ABC12`, `MELA25-XYZ99`
+- **Already Used**: `MELA25-USED1`, `MELA25-USED2`, `MELA25-OLD99`
+- **Invalid**: Any other code (e.g., `MELA25-XXXXX`)
+
+For complete documentation, see [MOCK-SERVER.md](MOCK-SERVER.md).
 
 ## 🔧 Configuration
 
