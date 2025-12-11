@@ -179,6 +179,15 @@
       display: flex;
       gap: 10px;
       align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .input-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex: 1;
+      min-width: 0;
     }
 
     .prefix {
@@ -189,10 +198,12 @@
       color: #64748b;
       font-family: monospace;
       font-size: 1.1em;
+      flex-shrink: 0;
     }
 
     #manualInput {
       flex: 1;
+      min-width: 0;
       padding: 12px 15px;
       border: 2px solid #e2e8f0;
       border-radius: 8px;
@@ -217,6 +228,33 @@
       cursor: pointer;
       transition: background 0.3s;
       white-space: nowrap;
+    }
+
+    /* Mobile responsive styles */
+    @media (max-width: 480px) {
+      .input-group {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .input-row {
+        width: 100%;
+      }
+
+      .prefix {
+        padding: 10px 12px;
+        font-size: 1em;
+      }
+
+      #manualInput {
+        padding: 10px 12px;
+        font-size: 1em;
+      }
+
+      .submit-btn {
+        width: 100%;
+        padding: 14px 20px;
+      }
     }
 
     .submit-btn:hover {
@@ -551,10 +589,294 @@
       font-size: 1.2em;
       font-weight: 500;
     }
+
+    /* Sunlight Mode Toggle */
+    .mode-toggle {
+      position: fixed;
+      top: 15px;
+      right: 15px;
+      background: rgba(255, 255, 255, 0.9);
+      border: 2px solid #667eea;
+      border-radius: 25px;
+      padding: 8px 16px;
+      font-size: 0.9em;
+      font-weight: 600;
+      cursor: pointer;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.3s;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .mode-toggle:hover {
+      transform: scale(1.05);
+    }
+
+    .mode-toggle:active {
+      transform: scale(0.98);
+    }
+
+    /* ===== SUNLIGHT MODE (High Contrast) ===== */
+    body.sunlight-mode {
+      background: #ffffff;
+    }
+
+    body.sunlight-mode .mode-toggle {
+      background: #000000;
+      color: #ffffff;
+      border-color: #000000;
+    }
+
+    body.sunlight-mode h1 {
+      color: #000000;
+      text-shadow: none;
+      font-weight: 800;
+    }
+
+    body.sunlight-mode .scanner-box,
+    body.sunlight-mode .manual-entry,
+    body.sunlight-mode .entry-input-box,
+    body.sunlight-mode .result-box,
+    body.sunlight-mode .loading-box {
+      background: #ffffff;
+      border: 3px solid #000000;
+      box-shadow: none;
+    }
+
+    body.sunlight-mode .manual-entry h3,
+    body.sunlight-mode .entry-input-box h3 {
+      color: #000000;
+      font-weight: 700;
+    }
+
+    body.sunlight-mode .prefix {
+      background: #e5e5e5;
+      color: #000000;
+      font-weight: 700;
+      border: 2px solid #000000;
+    }
+
+    body.sunlight-mode #manualInput,
+    body.sunlight-mode .other-input-group input {
+      border: 3px solid #000000;
+      color: #000000;
+      font-weight: 600;
+    }
+
+    body.sunlight-mode .submit-btn,
+    body.sunlight-mode .reset-btn {
+      background: #000000;
+      color: #ffffff;
+      font-weight: 700;
+      border: 3px solid #000000;
+    }
+
+    body.sunlight-mode .submit-btn:hover,
+    body.sunlight-mode .reset-btn:hover {
+      background: #333333;
+    }
+
+    /* Status headers - high contrast */
+    body.sunlight-mode .status-valid {
+      background: #00ff00;
+      color: #000000;
+      border: 4px solid #000000;
+      font-weight: 800;
+    }
+
+    body.sunlight-mode .status-partial {
+      background: #00bfff;
+      color: #000000;
+      border: 4px solid #000000;
+      font-weight: 800;
+    }
+
+    body.sunlight-mode .status-used {
+      background: #ffcc00;
+      color: #000000;
+      border: 4px solid #000000;
+      font-weight: 800;
+    }
+
+    body.sunlight-mode .status-invalid,
+    body.sunlight-mode .status-warning {
+      background: #ff0000;
+      color: #ffffff;
+      border: 4px solid #000000;
+      font-weight: 800;
+    }
+
+    body.sunlight-mode .details {
+      background: #f0f0f0;
+      border: 2px solid #000000;
+    }
+
+    body.sunlight-mode .detail-label {
+      color: #000000;
+      font-weight: 700;
+    }
+
+    body.sunlight-mode .detail-value {
+      color: #000000;
+      font-weight: 700;
+    }
+
+    body.sunlight-mode .detail-row {
+      border-color: #000000;
+    }
+
+    body.sunlight-mode .ticket-summary {
+      background: #e5e5e5;
+      border: 2px solid #000000;
+    }
+
+    body.sunlight-mode .ticket-summary .name {
+      color: #000000;
+      font-weight: 700;
+    }
+
+    body.sunlight-mode .ticket-summary .info {
+      color: #000000;
+      font-weight: 600;
+    }
+
+    body.sunlight-mode .entry-status-banner {
+      border: 3px solid #000000;
+      font-weight: 700;
+    }
+
+    body.sunlight-mode .entry-status-banner.partial {
+      background: #00bfff;
+      color: #000000;
+    }
+
+    body.sunlight-mode .entry-status-banner.used {
+      background: #ffcc00;
+      color: #000000;
+    }
+
+    body.sunlight-mode .quick-select-label {
+      color: #000000;
+      font-weight: 700;
+    }
+
+    body.sunlight-mode .quick-btn {
+      background: #e5e5e5;
+      color: #000000;
+      border: 3px solid #000000;
+      font-weight: 800;
+    }
+
+    body.sunlight-mode .quick-btn:hover {
+      background: #cccccc;
+    }
+
+    body.sunlight-mode .quick-btn.selected {
+      background: #000000;
+      color: #ffffff;
+    }
+
+    body.sunlight-mode .quick-btn.other-btn {
+      background: #ffcc00;
+      color: #000000;
+      border-color: #000000;
+    }
+
+    body.sunlight-mode .quick-btn.other-btn.selected {
+      background: #cc9900;
+      color: #000000;
+    }
+
+    body.sunlight-mode .other-input-group {
+      background: #ffcc00;
+      border: 2px solid #000000;
+    }
+
+    body.sunlight-mode .other-input-group label {
+      color: #000000;
+      font-weight: 700;
+    }
+
+    body.sunlight-mode .capacity-info {
+      color: #000000;
+      font-weight: 600;
+    }
+
+    body.sunlight-mode .capacity-info .remaining {
+      color: #008000;
+      font-weight: 800;
+    }
+
+    body.sunlight-mode .capacity-info .over {
+      color: #ff0000;
+      font-weight: 800;
+    }
+
+    body.sunlight-mode .warning-box {
+      background: #ff0000;
+      color: #ffffff;
+      border: 3px solid #000000;
+      font-weight: 700;
+    }
+
+    body.sunlight-mode .confirm-btn {
+      background: #00aa00;
+      color: #ffffff;
+      border: 3px solid #000000;
+      font-weight: 700;
+    }
+
+    body.sunlight-mode .confirm-btn:hover {
+      background: #008800;
+    }
+
+    body.sunlight-mode .confirm-btn:disabled {
+      background: #999999;
+    }
+
+    body.sunlight-mode .cancel-btn {
+      background: #666666;
+      color: #ffffff;
+      border: 3px solid #000000;
+      font-weight: 700;
+    }
+
+    body.sunlight-mode .entry-log {
+      background: #e5e5e5;
+      border: 2px solid #000000;
+    }
+
+    body.sunlight-mode .entry-log h4 {
+      color: #000000;
+      font-weight: 700;
+    }
+
+    body.sunlight-mode .entry-log-item {
+      color: #000000;
+      border-color: #000000;
+      font-weight: 600;
+    }
+
+    body.sunlight-mode .loading-text {
+      color: #000000;
+      font-weight: 700;
+    }
+
+    body.sunlight-mode .spinner {
+      border-color: #cccccc;
+      border-top-color: #000000;
+    }
   </style>
 </head>
 
 <body>
+  <button class="mode-toggle" id="modeToggle" onclick="toggleSunlightMode()">
+    <span id="modeIcon">☀️</span>
+    <span id="modeText">Sunlight</span>
+  </button>
+
   <div class="container">
     <h1>🎉 Mela 2025 Entry</h1>
 
@@ -565,9 +887,11 @@
     <div class="manual-entry">
       <h3>📝 Manual Entry</h3>
       <div class="input-group">
-        <span class="prefix">MELA25-</span>
-        <input type="text" id="manualInput" placeholder="Enter code (e.g., QZ0R0)" maxlength="10"
-          autocapitalize="characters" style="text-transform: uppercase;" />
+        <div class="input-row">
+          <span class="prefix">MELA25-</span>
+          <input type="text" id="manualInput" placeholder="Code (e.g., QZ0R0)" maxlength="10"
+            autocapitalize="characters" style="text-transform: uppercase;" />
+        </div>
         <button class="submit-btn" onclick="submitManual()">Check</button>
       </div>
     </div>
@@ -613,10 +937,41 @@
     let resultBox, statusHeader, details, scannerBox, manualEntry, manualInput, loadingBox;
     let entryInputBox, ticketSummary, entryStatusBanner, peopleEnteringInput, capacityInfo, warningBox, entryLogPreview, confirmBtn;
     let quickSelectButtons, otherInputGroup, otherPeopleInput;
+    let modeToggle, modeIcon, modeText;
 
     // Current ticket data (stored after initial scan)
     let currentTicket = null;
     let selectedCount = 0;
+
+    // Sunlight mode functions
+    function toggleSunlightMode() {
+      const body = document.body;
+      const isSunlight = body.classList.toggle('sunlight-mode');
+
+      // Update button text/icon
+      if (isSunlight) {
+        modeIcon.textContent = '🌙';
+        modeText.textContent = 'Normal';
+      } else {
+        modeIcon.textContent = '☀️';
+        modeText.textContent = 'Sunlight';
+      }
+
+      // Save preference
+      localStorage.setItem('sunlightMode', isSunlight ? 'on' : 'off');
+    }
+
+    function loadSunlightMode() {
+      const saved = localStorage.getItem('sunlightMode');
+      if (saved === 'on') {
+        document.body.classList.add('sunlight-mode');
+        if (modeIcon) modeIcon.textContent = '🌙';
+        if (modeText) modeText.textContent = 'Normal';
+      }
+    }
+
+    // Load mode preference immediately
+    loadSunlightMode();
 
     function generateQuickSelectButtons(numberOfPeople, remaining) {
       quickSelectButtons.innerHTML = '';
@@ -978,6 +1333,12 @@
       quickSelectButtons = document.getElementById("quickSelectButtons");
       otherInputGroup = document.getElementById("otherInputGroup");
       otherPeopleInput = document.getElementById("otherPeopleInput");
+      modeToggle = document.getElementById("modeToggle");
+      modeIcon = document.getElementById("modeIcon");
+      modeText = document.getElementById("modeText");
+
+      // Re-apply sunlight mode after DOM is ready (updates button text)
+      loadSunlightMode();
 
       manualInput.addEventListener("keypress", function (e) {
         if (e.key === "Enter") {
