@@ -73,11 +73,11 @@
 
     .status-header {
       text-align: center;
-      font-size: 2.5em;
+      font-size: 2.2em;
       font-weight: bold;
       margin-bottom: 25px;
-      padding: 20px;
-      border-radius: 10px;
+      padding: 22px;
+      border-radius: 12px;
     }
 
     .status-valid {
@@ -143,15 +143,17 @@
     .reset-btn {
       margin-top: 20px;
       width: 100%;
-      padding: 15px;
+      padding: 20px;
       background: #667eea;
       color: white;
       border: none;
-      border-radius: 10px;
-      font-size: 1.1em;
-      font-weight: 600;
+      border-radius: 12px;
+      font-size: 1.25em;
+      font-weight: 700;
       cursor: pointer;
       transition: background 0.3s;
+      min-height: 64px;
+      touch-action: manipulation;
     }
 
     .reset-btn:hover {
@@ -219,16 +221,18 @@
     }
 
     .submit-btn {
-      padding: 12px 25px;
+      padding: 16px 28px;
       background: #667eea;
       color: white;
       border: none;
-      border-radius: 8px;
-      font-size: 1.1em;
-      font-weight: 600;
+      border-radius: 10px;
+      font-size: 1.2em;
+      font-weight: 700;
       cursor: pointer;
       transition: background 0.3s;
       white-space: nowrap;
+      min-height: 56px;
+      touch-action: manipulation;
     }
 
     /* Mobile responsive styles */
@@ -243,36 +247,38 @@
       }
 
       .prefix {
-        padding: 10px 12px;
-        font-size: 1em;
+        padding: 12px 14px;
+        font-size: 1.1em;
       }
 
       #manualInput {
-        padding: 10px 12px;
-        font-size: 1em;
+        padding: 14px 16px;
+        font-size: 1.1em;
       }
 
       .submit-btn {
         width: 100%;
-        padding: 14px 20px;
+        padding: 18px 24px;
+        min-height: 60px;
       }
 
       /* Larger touch targets on mobile */
       .quick-btn {
-        min-width: 68px;
-        min-height: 52px;
-        padding: 14px 18px;
-        font-size: 1.4em;
+        min-width: 76px;
+        min-height: 62px;
+        padding: 16px 22px;
+        font-size: 1.6em;
       }
 
       .entry-buttons {
         flex-direction: column-reverse;
+        gap: 16px;
       }
 
       .confirm-btn,
       .cancel-btn {
         width: 100%;
-        min-height: 56px;
+        min-height: 68px;
       }
 
       .ticket-summary .counts {
@@ -334,7 +340,7 @@
     }
 
     .ticket-summary .name {
-      font-size: 1.4em;
+      font-size: 1.6em;
       font-weight: 700;
       color: #000000;
       margin-bottom: 4px;
@@ -342,7 +348,7 @@
 
     .ticket-summary .ticket-id {
       font-family: monospace;
-      font-size: 1.1em;
+      font-size: 1.2em;
       font-weight: 600;
       color: #374151;
       margin-bottom: 8px;
@@ -356,10 +362,10 @@
     }
 
     .ticket-summary .count-badge {
-      padding: 6px 14px;
+      padding: 8px 16px;
       border-radius: 20px;
       font-weight: 700;
-      font-size: 1em;
+      font-size: 1.1em;
     }
 
     .ticket-summary .count-badge.registered {
@@ -387,19 +393,20 @@
     }
 
     .ticket-summary .info {
-      color: #64748b;
-      font-size: 0.95em;
-      margin-top: 8px;
+      color: #000000;
+      font-size: 1.1em;
+      font-weight: 600;
+      margin-top: 10px;
     }
 
     .entry-status-banner {
-      padding: 14px 16px;
+      padding: 16px 18px;
       border-radius: 10px;
       margin-bottom: 18px;
       text-align: center;
       font-weight: 700;
-      font-size: 1.1em;
-      border: 3px solid;
+      font-size: 1.25em;
+      border: 4px solid;
     }
 
     .entry-status-banner.partial {
@@ -409,9 +416,9 @@
     }
 
     .entry-status-banner.used {
-      background: #FFB000;
-      color: #000000;
-      border-color: #cc8c00;
+      background: #78350f;
+      color: #ffffff;
+      border-color: #451a03;
     }
 
     .people-input-group {
@@ -452,8 +459,8 @@
       text-align: center;
       font-weight: 700;
       color: #000000;
-      font-size: 1.25em;
-      margin-bottom: 16px;
+      font-size: 1.4em;
+      margin-bottom: 18px;
     }
 
     .quick-select-buttons {
@@ -464,14 +471,14 @@
     }
 
     .quick-btn {
-      min-width: 72px;
-      min-height: 56px;
-      padding: 16px 24px;
+      min-width: 80px;
+      min-height: 64px;
+      padding: 18px 28px;
       background: #ffffff;
       color: #000000;
-      border: 3px solid #374151;
+      border: 4px solid #374151;
       border-radius: 16px;
-      font-size: 1.5em;
+      font-size: 1.7em;
       font-weight: 800;
       cursor: pointer;
       transition: all 0.15s;
@@ -496,21 +503,24 @@
     }
 
     .quick-btn.other-btn {
-      background: #fef3c7;
-      border-color: #d97706;
-      color: #92400e;
+      background: #f3f4f6;
+      border-color: #6b7280;
+      border-style: dashed;
+      color: #374151;
       font-size: 1.1em;
-      padding: 16px 20px;
+      padding: 18px 24px;
     }
 
     .quick-btn.other-btn:hover {
-      background: #fde68a;
+      background: #e5e7eb;
+      border-color: #4b5563;
     }
 
     .quick-btn.other-btn.selected {
-      background: #d97706;
+      background: #4b5563;
       color: #ffffff;
-      border-color: #b45309;
+      border-color: #374151;
+      border-style: solid;
     }
 
     .other-input-group {
@@ -534,13 +544,13 @@
     }
 
     .other-input-group input {
-      width: 80px;
-      padding: 10px;
-      border: 2px solid #f59e0b;
-      border-radius: 8px;
-      font-size: 1.2em;
+      width: 90px;
+      padding: 14px;
+      border: 3px solid #f59e0b;
+      border-radius: 10px;
+      font-size: 1.4em;
       text-align: center;
-      font-weight: 600;
+      font-weight: 700;
     }
 
     .other-input-group input:focus {
@@ -551,11 +561,11 @@
     .capacity-info {
       text-align: center;
       color: #374151;
-      font-size: 1em;
-      margin: 16px 0;
-      padding: 10px;
+      font-size: 1.15em;
+      margin: 18px 0;
+      padding: 12px;
       background: #f9fafb;
-      border-radius: 8px;
+      border-radius: 10px;
       font-weight: 600;
     }
 
@@ -571,15 +581,15 @@
 
     .warning-box {
       background: #dc2626;
-      border: 4px solid #991b1b;
-      border-radius: 10px;
-      padding: 16px;
-      margin: 16px 0;
+      border: 5px solid #991b1b;
+      border-radius: 12px;
+      padding: 18px;
+      margin: 18px 0;
       color: #ffffff;
       text-align: center;
       display: none;
       font-weight: 700;
-      font-size: 1.15em;
+      font-size: 1.25em;
       animation: pulse-warning 1.5s ease-in-out infinite;
     }
 
@@ -597,19 +607,19 @@
 
     .entry-buttons {
       display: flex;
-      gap: 12px;
-      margin-top: 20px;
+      gap: 20px;
+      margin-top: 24px;
     }
 
     .confirm-btn {
       flex: 1.5;
-      min-height: 60px;
-      padding: 18px 20px;
+      min-height: 72px;
+      padding: 22px 26px;
       background: #16a34a;
       color: #ffffff;
-      border: 3px solid #15803d;
-      border-radius: 14px;
-      font-size: 1.25em;
+      border: 4px solid #15803d;
+      border-radius: 16px;
+      font-size: 1.4em;
       font-weight: 700;
       cursor: pointer;
       transition: all 0.2s;
@@ -636,13 +646,13 @@
 
     .cancel-btn {
       flex: 1;
-      min-height: 60px;
-      padding: 18px 20px;
+      min-height: 72px;
+      padding: 22px 26px;
       background: #6b7280;
       color: #ffffff;
-      border: 3px solid #4b5563;
-      border-radius: 14px;
-      font-size: 1.15em;
+      border: 4px solid #4b5563;
+      border-radius: 16px;
+      font-size: 1.3em;
       font-weight: 700;
       cursor: pointer;
       transition: all 0.2s;
@@ -663,13 +673,12 @@
       background: #f8fafc;
       border-radius: 8px;
       padding: 14px;
-      border: 1px dashed #cbd5e1;
-      opacity: 0.85;
+      border: 1px solid #e2e8f0;
     }
 
     .entry-log h4 {
       color: #64748b;
-      font-size: 0.85em;
+      font-size: 0.8em;
       margin-bottom: 10px;
       text-transform: uppercase;
       letter-spacing: 0.5px;
@@ -678,10 +687,21 @@
     .entry-log-item {
       display: flex;
       justify-content: space-between;
-      padding: 5px 0;
+      align-items: center;
+      padding: 6px 0;
       border-bottom: 1px solid #e2e8f0;
-      font-size: 0.85em;
-      color: #64748b;
+      font-size: 1em;
+    }
+
+    .entry-log-item .entry-count {
+      color: #1e293b;
+      font-weight: 700;
+      font-size: 1.05em;
+    }
+
+    .entry-log-item .entry-time {
+      color: #94a3b8;
+      font-size: 0.9em;
     }
 
     .entry-log-item:last-child {
@@ -699,24 +719,24 @@
     .success-banner {
       text-align: center;
       color: #166534;
-      font-size: 1.25em;
+      font-size: 1.4em;
       font-weight: 700;
-      padding: 18px;
-      margin-bottom: 18px;
+      padding: 20px;
+      margin-bottom: 20px;
       background: #dcfce7;
-      border-radius: 10px;
-      border: 3px solid #16a34a;
+      border-radius: 12px;
+      border: 4px solid #16a34a;
     }
 
     .error-message {
       text-align: center;
       color: #991b1b;
-      font-size: 1.15em;
+      font-size: 1.25em;
       font-weight: 600;
-      padding: 24px;
+      padding: 26px;
       background: #fef2f2;
-      border-radius: 10px;
-      border: 2px solid #fecaca;
+      border-radius: 12px;
+      border: 3px solid #fecaca;
     }
 
     .loading-box {
@@ -813,7 +833,7 @@
     body.sunlight-mode .result-box,
     body.sunlight-mode .loading-box {
       background: #ffffff;
-      border: 4px solid #000000;
+      border: 5px solid #000000;
       box-shadow: none;
     }
 
@@ -913,13 +933,13 @@
     /* Ticket summary - pure white bg with black text */
     body.sunlight-mode .ticket-summary {
       background: #ffffff;
-      border: 4px solid #000000;
+      border: 5px solid #000000;
     }
 
     body.sunlight-mode .ticket-summary .name {
       color: #000000;
       font-weight: 900;
-      font-size: 1.6em;
+      font-size: 1.7em;
     }
 
     body.sunlight-mode .ticket-summary .ticket-id {
@@ -964,9 +984,9 @@
 
     /* Entry status banner - saturated colors */
     body.sunlight-mode .entry-status-banner {
-      border: 4px solid #000000;
+      border: 5px solid #000000;
       font-weight: 800;
-      font-size: 1.2em;
+      font-size: 1.3em;
     }
 
     body.sunlight-mode .entry-status-banner.partial {
@@ -975,8 +995,9 @@
     }
 
     body.sunlight-mode .entry-status-banner.used {
-      background: #FFB000;
-      color: #000000;
+      background: #78350f;
+      color: #ffffff;
+      border-color: #000000;
     }
 
     /* Quick select - large touch targets */
@@ -989,12 +1010,12 @@
     body.sunlight-mode .quick-btn {
       background: #ffffff;
       color: #000000;
-      border: 4px solid #000000;
+      border: 5px solid #000000;
       font-weight: 900;
-      font-size: 1.7em;
-      min-width: 80px;
-      min-height: 64px;
-      padding: 18px 28px;
+      font-size: 1.8em;
+      min-width: 84px;
+      min-height: 68px;
+      padding: 20px 30px;
     }
 
     body.sunlight-mode .quick-btn:hover {
@@ -1012,15 +1033,17 @@
     }
 
     body.sunlight-mode .quick-btn.other-btn {
-      background: #FFB000;
+      background: #e5e5e5;
       color: #000000;
       border-color: #000000;
-      font-size: 1.2em;
+      border-style: dashed;
+      font-size: 1.1em;
     }
 
     body.sunlight-mode .quick-btn.other-btn.selected {
-      background: #cc8c00;
-      color: #000000;
+      background: #555555;
+      color: #ffffff;
+      border-style: solid;
     }
 
     body.sunlight-mode .other-input-group {
@@ -1043,8 +1066,8 @@
       color: #000000;
       font-weight: 700;
       background: #f5f5f5;
-      border: 3px solid #000000;
-      font-size: 1.1em;
+      border: 4px solid #000000;
+      font-size: 1.15em;
     }
 
     body.sunlight-mode .capacity-info .remaining {
@@ -1061,20 +1084,20 @@
     body.sunlight-mode .warning-box {
       background: #cc0000;
       color: #ffffff;
-      border: 5px solid #000000;
+      border: 6px solid #000000;
       font-weight: 800;
-      font-size: 1.25em;
-      padding: 18px;
+      font-size: 1.3em;
+      padding: 20px;
     }
 
     /* Confirm button - green for safe, orange for risky */
     body.sunlight-mode .confirm-btn {
       background: #00aa00;
       color: #ffffff;
-      border: 4px solid #000000;
+      border: 5px solid #000000;
       font-weight: 800;
-      font-size: 1.35em;
-      min-height: 68px;
+      font-size: 1.4em;
+      min-height: 76px;
     }
 
     body.sunlight-mode .confirm-btn:hover {
@@ -1098,10 +1121,10 @@
     body.sunlight-mode .cancel-btn {
       background: #555555;
       color: #ffffff;
-      border: 4px solid #000000;
+      border: 5px solid #000000;
       font-weight: 800;
-      font-size: 1.2em;
-      min-height: 68px;
+      font-size: 1.25em;
+      min-height: 76px;
     }
 
     body.sunlight-mode .cancel-btn:hover {
@@ -1110,9 +1133,8 @@
 
     /* Entry log - clearly non-interactive */
     body.sunlight-mode .entry-log {
-      background: #f0f0f0;
-      border: 2px dashed #666666;
-      opacity: 0.9;
+      background: #f5f5f5;
+      border: 2px solid #666666;
     }
 
     body.sunlight-mode .entry-log h4 {
@@ -1121,8 +1143,16 @@
     }
 
     body.sunlight-mode .entry-log-item {
-      color: #333333;
       border-color: #999999;
+    }
+
+    body.sunlight-mode .entry-log-item .entry-count {
+      color: #000000;
+      font-weight: 800;
+    }
+
+    body.sunlight-mode .entry-log-item .entry-time {
+      color: #555555;
       font-weight: 600;
     }
 
@@ -1187,11 +1217,10 @@
     </div>
 
     <div class="entry-input-box" id="entryInputBox">
-      <h3>How many people entering?</h3>
       <div class="ticket-summary" id="ticketSummary"></div>
       <div class="entry-status-banner" id="entryStatusBanner"></div>
       <div class="quick-select-section">
-        <div class="quick-select-label">Select number of people:</div>
+        <div class="quick-select-label">How many entering?</div>
         <div class="quick-select-buttons" id="quickSelectButtons"></div>
         <div class="other-input-group" id="otherInputGroup">
           <label for="otherPeopleInput">Enter count:</label>
@@ -1217,12 +1246,14 @@
 
   <script src="config.js"></script>
   <script>
+    // Use 'let' for variables that may be reassigned
     let html5QrCode;
     // Cache DOM elements for better performance
     let resultBox, statusHeader, details, scannerBox, manualEntry, manualInput, loadingBox;
     let entryInputBox, ticketSummary, entryStatusBanner, peopleEnteringInput, capacityInfo, warningBox, entryLogPreview, confirmBtn;
     let quickSelectButtons, otherInputGroup, otherPeopleInput;
     let modeToggle, modeIcon, modeText;
+    let pageTitle;
 
     // Current ticket data (stored after initial scan)
     let currentTicket = null;
@@ -1278,10 +1309,10 @@
         quickSelectButtons.appendChild(btn);
       }
 
-      // Add "Other" button
+      // Add "Custom" button with edit indicator
       const otherBtn = document.createElement('button');
       otherBtn.className = 'quick-btn other-btn';
-      otherBtn.textContent = 'Other';
+      otherBtn.textContent = 'Custom ✎';
       otherBtn.id = 'otherBtn';
       otherBtn.onclick = () => selectOther();
       quickSelectButtons.appendChild(otherBtn);
@@ -1348,30 +1379,42 @@
       const remaining = numberOfPeople - totalEntered;
 
       // Populate ticket summary with compact badge layout
-      const remainingBadge = remaining > 0
-        ? `<span class="count-badge remaining">Remaining: ${remaining}</span>`
-        : `<span class="count-badge over">Over by: ${totalEntered - numberOfPeople}</span>`;
+      // Show remaining badge only when > 0, otherwise show "All entered" message
+      let statusBadge;
+      if (remaining > 0) {
+        statusBadge = `<span class="count-badge remaining">Remaining: ${remaining}</span>`;
+      } else if (totalEntered > numberOfPeople) {
+        statusBadge = `<span class="count-badge over">Over by: ${totalEntered - numberOfPeople}</span>`;
+      } else {
+        statusBadge = `<span class="count-badge entered">All entered</span>`;
+      }
 
       ticketSummary.innerHTML = `
         <div class="name">${resp.name}</div>
         <div class="ticket-id">Ticket: ${resp.ticketId}</div>
         <div class="counts">
           <span class="count-badge registered">Registered: ${numberOfPeople}</span>
-          <span class="count-badge entered">Entered: ${totalEntered}</span>
-          ${remainingBadge}
+          ${totalEntered > 0 ? `<span class="count-badge entered">Entered: ${totalEntered}</span>` : ''}
+          ${statusBadge}
         </div>
         <div class="info">${resp.iAm} • ${resp.transport}</div>
       `;
 
-      // Show status banner for partial/used tickets
-      if (resp.entryStatus === 'partial') {
-        entryStatusBanner.style.display = 'block';
-        entryStatusBanner.className = 'entry-status-banner partial';
-        entryStatusBanner.innerHTML = `PARTIAL ENTRY: ${totalEntered} of ${numberOfPeople} already entered`;
-      } else if (resp.entryStatus === 'used') {
+      // Show status banner for partial/used tickets - simplified messaging
+      if (totalEntered > numberOfPeople) {
+        // Overused ticket - clear explicit message
         entryStatusBanner.style.display = 'block';
         entryStatusBanner.className = 'entry-status-banner used';
-        entryStatusBanner.innerHTML = `FULLY USED: All ${numberOfPeople} registered have entered`;
+        entryStatusBanner.innerHTML = `Ticket Overused: ${totalEntered} entries for ${numberOfPeople}-person ticket`;
+      } else if (resp.entryStatus === 'partial') {
+        entryStatusBanner.style.display = 'block';
+        entryStatusBanner.className = 'entry-status-banner partial';
+        entryStatusBanner.innerHTML = `${remaining} of ${numberOfPeople} still to enter`;
+      } else if (resp.entryStatus === 'used') {
+        // Exactly at capacity
+        entryStatusBanner.style.display = 'block';
+        entryStatusBanner.className = 'entry-status-banner used';
+        entryStatusBanner.innerHTML = `All ${numberOfPeople} registered have entered`;
       } else {
         entryStatusBanner.style.display = 'none';
       }
@@ -1390,11 +1433,11 @@
       if (resp.entryLog && resp.entryLog.length > 0) {
         entryLogPreview.style.display = 'block';
         entryLogPreview.innerHTML = `
-          <h4>ENTRY HISTORY</h4>
+          <h4>Entry history</h4>
           ${resp.entryLog.map(entry => `
             <div class="entry-log-item">
-              <span>${entry.count} person${entry.count > 1 ? 's' : ''}</span>
-              <span>${new Date(entry.timestamp).toLocaleTimeString()}</span>
+              <span class="entry-count">${entry.count} person${entry.count > 1 ? 's' : ''}</span>
+              <span class="entry-time">${new Date(entry.timestamp).toLocaleTimeString()}</span>
             </div>
           `).join('')}
         `;
@@ -1412,16 +1455,19 @@
       const newTotal = totalEntered + entering;
       const remaining = numberOfPeople - totalEntered;
 
+      // Simplified capacity info - avoid confusing "Over capacity by 0"
       if (remaining > 0) {
-        capacityInfo.innerHTML = `Registered: <strong>${numberOfPeople}</strong> | Already entered: <strong>${totalEntered}</strong> | Remaining: <span class="remaining">${remaining}</span>`;
+        capacityInfo.innerHTML = `Remaining: <span class="remaining">${remaining}</span> of ${numberOfPeople} registered`;
+      } else if (totalEntered > numberOfPeople) {
+        capacityInfo.innerHTML = `<span class="over">Already over by ${totalEntered - numberOfPeople}</span> (${numberOfPeople} registered)`;
       } else {
-        capacityInfo.innerHTML = `Registered: <strong>${numberOfPeople}</strong> | Already entered: <strong>${totalEntered}</strong> | <span class="over">Over capacity by ${totalEntered - numberOfPeople}</span>`;
+        capacityInfo.innerHTML = `All ${numberOfPeople} registered have entered`;
       }
 
       // Show warning if exceeding capacity - moved to be more prominent
       if (newTotal > numberOfPeople) {
         warningBox.style.display = 'block';
-        warningBox.innerHTML = `WARNING: Entering ${entering} will exceed registration by ${newTotal - numberOfPeople}`;
+        warningBox.innerHTML = `WARNING: Will exceed registration by ${newTotal - numberOfPeople}`;
         confirmBtn.textContent = 'Confirm Anyway';
         confirmBtn.classList.add('warning-state');
       } else {
@@ -1512,11 +1558,11 @@
           </div>
           ${resp.entryLog && resp.entryLog.length > 0 ? `
           <div class="entry-log">
-            <h4>ENTRY HISTORY</h4>
+            <h4>Entry history</h4>
             ${resp.entryLog.map(entry => `
               <div class="entry-log-item">
-                <span>${entry.count} person${entry.count > 1 ? 's' : ''}</span>
-                <span>${new Date(entry.timestamp).toLocaleTimeString()}</span>
+                <span class="entry-count">${entry.count} person${entry.count > 1 ? 's' : ''}</span>
+                <span class="entry-time">${new Date(entry.timestamp).toLocaleTimeString()}</span>
               </div>
             `).join('')}
           </div>
@@ -1550,9 +1596,10 @@
         html5QrCode.pause();
       }
 
-      // Hide scanner and manual entry, show loading spinner
+      // Hide scanner, manual entry, and title; show loading spinner
       scannerBox.classList.add("hidden");
       manualEntry.classList.add("hidden");
+      pageTitle.style.display = "none";
       loadingBox.classList.add("visible");
 
       console.log("Processing ticket:", ticketId);
@@ -1600,9 +1647,10 @@
       manualInput.value = "";
       currentTicket = null;
 
-      // Show the scanner box and manual entry again
+      // Show the scanner box, manual entry, and title again
       scannerBox.classList.remove("hidden");
       manualEntry.classList.remove("hidden");
+      pageTitle.style.display = "";
 
       if (html5QrCode) {
         html5QrCode.resume();
@@ -1633,6 +1681,7 @@
       modeToggle = document.getElementById("modeToggle");
       modeIcon = document.getElementById("modeIcon");
       modeText = document.getElementById("modeText");
+      pageTitle = document.querySelector(".container h1");
 
       // Re-apply sunlight mode after DOM is ready (updates button text)
       loadSunlightMode();
